@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-footer.component',
+  selector: 'app-footer',
   imports: [],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-
+  @Input() company = '';
+  @Input() author = '';
+  year = new Date().getFullYear();
 }

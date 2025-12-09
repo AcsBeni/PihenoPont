@@ -1,14 +1,15 @@
 <div class="container-fluid">
-    <app-header></app-header>
+    
     <app-navbar [title]="title"></app-navbar>
-  
+    <app-header></app-header>
+    <app-message></app-message>
     <div class="container my-4">
       <router-outlet />
     </div>
   
     <app-footer [company]="company" [author]="author"></app-footer>
   
-    <app-message></app-message>
+    
   
   </div>
   

@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
 export class FooterComponent {
   @Input() company = '';
   @Input() author = '';
-  year = new Date().getFullYear();
+  
 }

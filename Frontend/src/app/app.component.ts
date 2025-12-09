@@ -20,7 +20,7 @@ import { MessageComponent } from "./components/system/message/message.component"
 export class AppComponent {
   title = 'Pihenőpont';
   subtitle = 'Kényelmesen és egyszerűen egy magának tetsző szálloda választása';
-  company = 'TÁJOB';
+  company = '13.A';
   author = 'ÁcsBenjámin/TardosOrsolya';
 }
 

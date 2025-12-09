@@ -1,1 +1,63 @@
-<p>profile.component works!</p>
+<div class="form-container profile-container">
+
+    <h3 class="text-center mt-3">Profil</h3>
+    <hr>
+
+    <div class="row">
+
+        <!-- Left column: Email & Name -->
+        <div class="col-md-6 mb-4">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="Emailfield" [(ngModel)]="User.email" #emailModel="ngModel"
+                required
+                email >
+                <label for="Emailfield">Email address</label>
+                <small class="text-danger" 
+                *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
+                    Kérem írjon be egy helyes emailt
+                </small>
+                
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="Namefield" [(ngModel)]="User.name">
+                <label for="Namefield">Név</label>
+            </div>
+
+            <button [disabled]="!emailRegExp.test(emailModel.value)" type="submit" class="btn btn-primary w-100" (click)="Profileupdate()">Adatmódosítás</button>
+        </div>
+
+        <!-- Right column: Password change -->
+        <div class="col-md-6 mb-4">
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="oldPasswordfield" [(ngModel)]="oldpassword" >
+                <label for="oldPasswordfield">Mostani jelszó</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="Passwordfield" [(ngModel)]="newpassword" #newpass="ngModel"
+                required>
+                <label for="Passwordfield">Új jelszó</label>
+                <small class="text-danger"
+                *ngIf="newpass.value && !passwdRegExp.test(newpass.value)">
+                    A jelszónak legalább 8 karakterből kell állnia, tartalmaznia kell kis- és nagybetűt, valamint számot!
+                </small>
+            </div>
+            
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="ConfirmPasswordfield" [(ngModel)]="confirmpassword" #confpass="ngModel"
+                required>
+                <label for="ConfirmPasswordfield">Új jelszó megerősítés</label>
+                <small class="text-danger"
+                *ngIf="confpass.value != newpass.value">
+                    A jelszónak kettő jelszónak meg kell egyeznie!
+                </small>
+            </div>
+
+            <button [disabled]="!passwdRegExp.test(newpass.value) || confpass.value != newpass.value" type="submit" class="btn btn-primary w-100" (click)="Passwordupdate()">Jelszó módosítás</button>
+        </div>
+
+    </div>
+
+</div>

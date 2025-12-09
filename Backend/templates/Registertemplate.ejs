@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Registration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #101112;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #270a74;
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .content {
+            padding: 30px 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .content p {
+            margin: 0 0 16px 0;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0 0 0;
+        }
+
+        .button {
+            background-color: #0b3d91;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #082d66;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777777;
+        }
+
+        @media (max-width: 620px) {
+            .container {
+                width: 95% !important;
+            }
+
+            .header h1 {
+                font-size: 28px !important;
+            }
+
+            .content {
+                font-size: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+            <td align="center">
+                <table class="container" role="presentation">
+                    <!-- Header -->
+                    <tr>
+                        <td class="header">
+                            <h1>Pihenőpont</h1>
+                            <p style="font-size:18px; margin-top:10px;">Thank you for your registration!</p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td class="content">
+                            <p>Dear <%= username %>,</p>
+                            <p>We sincerely thank you for choosing our service. We’re excited to have you on board!</p>
+                            <p>Many thanks from: <%= company %> team.</p>
+
+                            <div class="button-container">
+                                <a href="<%= loginUrl %>" class="button">Go to Dashboard</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td class="footer">
+                            &copy; <%= new Date().getFullYear() %> <%= company %>. All rights reserved.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

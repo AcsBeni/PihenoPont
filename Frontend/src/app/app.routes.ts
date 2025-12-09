@@ -16,6 +16,7 @@ import { MessageComponent } from './components/system/message/message.component'
 import { NavbarComponent } from './components/system/navbar/navbar.component';
 import { NotfoundComponent } from './components/system/notfound/notfound.component';
 import { MainComponent } from './components/guest/main.component/main.component';
+import { CalendarComponent } from './components/guest/calendar.component/calendar.component';
 
 export const routes: Routes = [
 
@@ -35,6 +36,7 @@ export const routes: Routes = [
     //GUEST
     {path: 'bookinglist', component:BookinglistComponent},
     {path: 'main', component:MainComponent},
+    {path: 'calendar', component:CalendarComponent},
     
     //SYSTEM
     {path: 'footer', component:FooterComponent},

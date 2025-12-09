@@ -1,1 +1,95 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* app-root should stretch to fill the screen */
+  app-root {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  /* main content wrapper should expand */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-container {
+    max-width: 420px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .form-container h3 {
+    font-weight: 700;
+    color: #0b3d91;
+    text-align: center;
+  }
+  
+  .form-container hr {
+    margin: 15px 0 25px;
+  }
+  
+  /* Floating inputs */
+  .form-floating > label {
+    color: #777;
+  }
+  
+  .form-control {
+    border-radius: 10px !important;
+    border: 2px solid #e1e1e1;
+    transition: 0.25s;
+  }
+  
+  .form-control:focus {
+    border-color: #0b3d91;
+    box-shadow: 0 0 0 0.2rem rgba(11, 61, 145, 0.15);
+  }
+  
+  /* Buttons row */
+  .gombm {
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  /* Primary button (blue) */
+  .btn-primary {
+    background: #0b3d91;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+  
+  .btn-primary:hover {
+    background: #082d66;
+  }
+  
+  /* Secondary button (outlined) */
+  .btn-secondary {
+    border-radius: 8px;
+    padding: 10px 20px;
+  }
+  
+  .text-danger {
+    font-size: 0.85rem;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  

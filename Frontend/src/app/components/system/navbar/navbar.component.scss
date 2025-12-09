@@ -1,0 +1,75 @@
+/* Navbar container */
+
+
+.navbar {
+    background: linear-gradient(90deg, #595c96, #0b0f19);
+    padding: 12px 25px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  }
+  .navbar-nav {
+    flex: 1;
+    justify-content: center;
+  }
+  .navbar #titleicon{
+    background-image: url("../../../assets/favicon.ico");
+    height: 20px;
+    width: 20px;
+}
+  
+  /* Brand */
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    letter-spacing: 1px;
+  }
+  
+  .navbar-brand span {
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  
+  /* Nav links */
+  .nav-link {
+    color: #ffffff !important;
+    margin-right: 18px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    position: relative;
+    transition: 0.3s ease;
+  }
+  
+  /* Hover underline animation */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Active link look */
+  .nav-link.active {
+    font-weight: 700;
+  }
+  
+  .nav-link.active::after {
+    width: 100%;
+  }
+  
+  /* Toggler button */
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .navbar-toggler-icon {
+    filter: invert(1);
+  }
+  

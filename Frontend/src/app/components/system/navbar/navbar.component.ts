@@ -36,16 +36,20 @@ export class NavbarComponent {
   setupMenu(Isloggedin:boolean) {
     
     this.navItems = [
+          { name: 'Calendar', url: 'calendar', icon: '' },
+          { name: 'Booking', url: 'booking', icon: '' },
+          
     ...(Isloggedin
       ? [
-          { name: 'Booking', url: 'booking', icon: '' },
+          
           { name: 'Profile', url: 'profile', icon: '' },
           { name: 'Kilépés', url: 'logout', icon: '' },
         ]
       : [
-          { name: 'Sign up', url: 'registration', icon: '' },
-          { name: 'Sign in', url: 'login', icon: '' },
+        { name: 'Sign up', url: 'registration', icon: '' },
+        { name: 'Sign in', url: 'login', icon: '' },
         ]),
+          
   ];
   }
 

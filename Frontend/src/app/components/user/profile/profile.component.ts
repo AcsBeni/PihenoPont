@@ -1,11 +1,104 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Users } from '../../../interfaces/user';
+import { ApiService } from '../../../services/api.service';
+import { MessageService } from '../../../services/message.service';
+import { AuthService } from '../../../services/auth.service';
+import { Resp } from '../../../interfaces/apiresponse';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
+  constructor(    
+    private api:ApiService,
+    private message:MessageService,
+    private auth:AuthService
+    ){
+  }
+//Form adatok
+oldpassword: any;
+newpassword: any;
+confirmpassword: any;
+
+// Ellenőrzések
+passwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+//User model
+User:Users ={
+  name:"",
+  email:"",
+  password:"",
+  role:"user"
+}
+
+  
+ngOnInit(): void{
+     
+  
+  this.User = this.auth.loggedUser()
+  console.log(this.User.id)
+  
+}
+Profileupdate(){
+  if(this.User.email==""|| this.User.name==""){
+    this.message.show('danger', 'Hiba',  `Kérem töltsön ki minden mezőt!!`)
+    return;
+  }
+  if (!this.emailRegExp.test(this.User.email)) {
+  this.message.show('danger', 'Hiba', "Érvénytelen email formátum!");
+  return;
+}
+  this.api.profileupdate("users/profile", Number(this.User.id), this.User).then((res:Resp)=>{
+    if(res.status===400){
+      this.message.show('danger', 'Hiba',  `${res.message}`)
+      return
+    }
+    
+    if(res.status===200){
+      this.auth.login(JSON.stringify(res.data))
+      console.log(JSON.stringify(res.data))
+      this.message.show('success','Ok', `${res.message}`)
+    }
+  })
+} 
+Passwordupdate(){
+const passwords = {
+oldpass: this.oldpassword,
+password: this.newpassword
+};
+if(passwords.oldpass =="" || passwords.password=="" || this.confirmpassword==""){
+  this.message.show('danger', 'Hiba',  `Kérem töltsön ki minden mezőt!!`)
+  return;
+}
+ if (!this.passwdRegExp.test(this.User.password)) {
+  this.message.show('danger', 'Hiba', "A jelszónak legalább 8 karakterből kell állnia, tartalmaznia kell kis- és nagybetűt, valamint számot!");
+  return;
+}
+if(passwords.oldpass ==passwords.password){
+  this.message.show('danger', 'Hiba',  `A régi meg az új jelszó nem lehet ugyanaz`)
+  return;
+}
+if(passwords.password != this.confirmpassword){
+  this.message.show('danger', 'Hiba',  `A megerősítő jelszónak és az új jelszónak ugyanannak kell lennie`)
+  return;
+}
+this.api.profileupdate("users/password", Number(this.User.id), passwords ).then((res:Resp)=>{
+    if(res.status===400){
+      this.message.show('danger', 'Hiba',  `${res.message}`)
+      return
+    }
+    if(res.status===200){
+      this.auth.login(JSON.stringify(res.data))
+      console.log(JSON.stringify(res.data))
+      this.message.show('success','Ok', `${res.message}`)
+    }
+  })
+}
 
 }

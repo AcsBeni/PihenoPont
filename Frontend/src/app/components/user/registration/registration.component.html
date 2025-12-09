@@ -1,28 +1,83 @@
+<div class="form-container">
 
-<div class="container">
-    <h3 class="text-center mt-3">Registration</h3>
+    <h3>Registration</h3>
     <hr>
+
+    <!-- Email -->
     <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="" [(ngModel)]="NewUser.email" value="">
+        <input 
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            placeholder=""
+            name="email"
+            [(ngModel)]="NewUser.email"
+            #emailModel="ngModel"
+            required
+            email
+        >
         <label for="floatingInput">Email address</label>
+
+        <small class="text-danger" 
+               *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
+            Kérem írjon be egy helyes emailt
+        </small>
     </div>
+
+    <!-- Name -->
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="nameinput" placeholder="" [(ngModel)]="NewUser.name" value="">
+        <input 
+            type="text"
+            class="form-control"
+            id="nameinput"
+            placeholder=""
+            [(ngModel)]="NewUser.name">
         <label for="nameinput">Name</label>
     </div>
+
+    <!-- Password -->
     <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="" [(ngModel)]="NewUser.password">
+        <input 
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder=""
+            [(ngModel)]="NewUser.password"
+            #password="ngModel"
+            required>
         <label for="floatingPassword">Password</label>
-        
+
+        <small class="text-danger"
+           *ngIf="password.value && !passwdRegExp.test(password.value)">
+            A jelszónak legalább 8 karakterből kell állnia, tartalmaznia kell kis- és nagybetűt, valamint számot!
+        </small>
     </div>
-    <div class="form-floating">
-        <input type="password" class="form-control" id="confirmPassword" placeholder="" [(ngModel)]="confirmpassword">
+
+    <!-- Confirm Password -->
+    <div class="form-floating mb-3">
+        <input 
+            type="password"
+            class="form-control"
+            id="confirmPassword"
+            placeholder=""
+            [(ngModel)]="confirmpassword">
         <label for="confirmPassword">Confirm Password</label>
-        
     </div>
-    
+
+    <!-- Buttons -->
     <div class="d-flex gap-2 gombm">
-        <button class="btn btn-primary"(click)="register()">Registration</button>
-        <button class="btn btn-secondary" routerLink="/login">Login</button>
+        <button 
+            class="btn btn-primary"
+            [disabled]="!emailRegExp.test(emailModel.value) || !passwdRegExp.test(password.value)"
+            (click)="register()">
+            Registration
+        </button>
+        <a href="/login">
+            <button class="btn btn-secondary">
+                Login
+            </button>
+        </a>
+       
     </div>
+
 </div>

@@ -23,8 +23,12 @@ export class LoginComponent {
     ){
   }
   
+  // Ellenőrzések
+  passwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
   User:Users ={
-    ID:0,
     name:"",
     email:"",
     password:"",
@@ -33,11 +37,17 @@ export class LoginComponent {
 
   rememberMe:boolean=false
   login(){
+    //Üres adatok ellenőrzése
     if(this.User.email == "" || this.User.password ==""){
       this.message.show('danger', 'Hiba', "Nem adtál meg minden adatot!")
       return;
     }
-
+    //Email ellenőrzése
+    if (!this.emailRegExp.test(this.User.email)) {
+      this.message.show('danger', 'Hiba', "Érvénytelen email formátum!");
+      return;
+    }
+    //Login
     this.api.login('users/login',this.User).then((res:Resp)=>{
        if(res.status===500){
         this.message.show('danger', 'Hiba',  `${res.message}`)

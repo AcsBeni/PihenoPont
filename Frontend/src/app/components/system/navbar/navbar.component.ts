@@ -33,7 +33,7 @@ export class NavbarComponent {
       this.setupMenu(res);
     })
     //this.isAdmin = this.auth.isAdmin();
-    console.log(this.auth.loggedUser())
+    console.log(this.auth.isAdmin())
   }
 
   setupMenu(Isloggedin:boolean) {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Resp } from '../../../interfaces/apiresponse';
 import { Users } from '../../../interfaces/user';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })

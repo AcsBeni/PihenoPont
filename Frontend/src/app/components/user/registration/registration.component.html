@@ -60,23 +60,31 @@
             class="form-control"
             id="confirmPassword"
             placeholder=""
-            [(ngModel)]="confirmpassword">
+            [(ngModel)]="confirmpassword"
+            #confpass="ngModel"
+            required>
         <label for="confirmPassword">Confirm Password</label>
+        <small class="text-danger"
+                *ngIf="password.value != confpass.value">
+                    A jelszónak kettő jelszónak meg kell egyeznie!
+        </small>
     </div>
 
     <!-- Buttons -->
     <div class="d-flex gap-2 gombm">
         <button 
             class="btn btn-primary"
-            [disabled]="!emailRegExp.test(emailModel.value) || !passwdRegExp.test(password.value)"
+            [disabled]="!emailRegExp.test(emailModel.value) ||
+             !passwdRegExp.test(password.value) || 
+             password.value != confpass.value"
             (click)="register()">
             Registration
         </button>
-        <a href="/login">
-            <button class="btn btn-secondary">
-                Login
-            </button>
-        </a>
+        
+        <button class="btn btn-secondary" routerLink="/login">
+            Login
+        </button>
+       
        
     </div>
 

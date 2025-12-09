@@ -14,6 +14,7 @@ export class NavbarComponent {
   @Input() title =''
   navItems: Navitem[] = [];
   isLoggedIn = false
+  isAdmin = false
   loggedUserName=''
 
   constructor(   
@@ -31,6 +32,8 @@ export class NavbarComponent {
       
       this.setupMenu(res);
     })
+    //this.isAdmin = this.auth.isAdmin();
+    console.log(this.auth.loggedUser())
   }
 
   setupMenu(Isloggedin:boolean) {
@@ -41,10 +44,15 @@ export class NavbarComponent {
           
     ...(Isloggedin
       ? [
-          
-          { name: 'Profile', url: 'profile', icon: '' },
-          { name: 'Kilépés', url: 'logout', icon: '' },
-        ]
+        { name: 'Profile', url: 'profile', icon: '' },
+        { name: 'Kilépés', url: 'logout', icon: '' }, 
+        ...(this.isAdmin) ? [
+        
+        { name: 'Bookings', url: 'bookings', icon: '' },
+        { name: 'Users', url: 'users', icon: '' },
+
+      ]:[]]
+        
       : [
         { name: 'Sign up', url: 'registration', icon: '' },
         { name: 'Sign in', url: 'login', icon: '' },

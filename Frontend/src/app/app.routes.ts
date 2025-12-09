@@ -44,5 +44,7 @@ export const routes: Routes = [
     {path: 'lightbox', component:LightboxComponent},
     {path: 'message', component:MessageComponent},
     {path: 'navbar', component:NavbarComponent},
-    {path: 'notfound', component:NotfoundComponent},
+    { path: '', redirectTo: '/main', pathMatch: 'full'},
+    {path: '**', component:NotfoundComponent},
+
 ];

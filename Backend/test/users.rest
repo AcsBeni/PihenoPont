@@ -52,11 +52,11 @@ Content-Type: application/json
 DELETE {{url}}/users/7
 
 ###Update user pass by id
-PATCH {{url}}/users/password/8
+PATCH {{url}}/users/password/5
 Content-Type: application/json
 
 {
-    "oldpass":"1234",
+    "oldpass":"Secure123",
     "password": "123"
 }
 

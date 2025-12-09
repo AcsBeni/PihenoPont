@@ -76,7 +76,7 @@ if(passwords.oldpass =="" || passwords.password=="" || this.confirmpassword=="")
   this.message.show('danger', 'Hiba',  `Kérem töltsön ki minden mezőt!!`)
   return;
 }
- if (!this.passwdRegExp.test(this.User.password)) {
+ if (!this.passwdRegExp.test(this.newpassword)) {
   this.message.show('danger', 'Hiba', "A jelszónak legalább 8 karakterből kell állnia, tartalmaznia kell kis- és nagybetűt, valamint számot!");
   return;
 }

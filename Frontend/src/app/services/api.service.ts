@@ -11,7 +11,7 @@ export class ApiService {
 
   constructor() {
   }
-
+  //Kiválasztás minden
   async selectAll(table: string): Promise<Resp> {
     try {
       const res = await axios.get(`${this.SERVER}/${table}`)
@@ -20,17 +20,16 @@ export class ApiService {
         data: res.data
 
       }
-    } catch (err) {
-      console.log(err)
+    } catch (err:any) {
       return {
         status: 400,
+        message: err.response.data.error,
         data: err
-
       }
 
     }
   }
-
+  //Kiválasztás
   async select(table: string, type: number | string): Promise<Resp> {
     try {
       const res = await axios.get(`${this.SERVER}/${table}/${type}`)
@@ -39,14 +38,16 @@ export class ApiService {
         data: res.data,
         message: "Sikeres kiválasztás"
       }
-    } catch (err) {
+    } catch (err:any) {
       return {
         status: 400,
-        message: "Hiba történt kiválasztásnál",
+        message: err.response.data.error,
         data: err
       }
     }
   }
+
+  //Profil bejelentkezése
   async login(table: string, data: any) {
     try {
       const res = await axios.post(
@@ -58,14 +59,15 @@ export class ApiService {
         message: 'Sikeres bejelentkezés',
         data: res.data
       }
-    } catch (err) {
+    } catch (err:any) {
       return {
         status: 400,
-        message: 'Hiba történt a bejelentkezésnél',
+        message: err.response.data.error,
         data: err
       }
     }
   }
+
   //Profil regisztráció
   async register(table: string, data: any) {
     try {
@@ -78,14 +80,15 @@ export class ApiService {
         message: 'Sikeres regisztráció',
         data: res.data
       }
-    } catch (err) {
+    } catch (err:any) {
       return {
         status: 400,
-        message: 'Hiba történt a regisztrációnál',
+        message: err.response.data.error,
         data: err
       }
     }
   }
+
   // Profil frissítése
   async profileupdate(table: string, id: number, data: any) {
     try {
@@ -98,11 +101,11 @@ export class ApiService {
         data: res.data,
         message: 'Sikeres profil frissítés!',
       }
-    } catch (err) {
+    } catch (err:any) {
       return {
         status: 400,
         data: err,
-        message:'Sikertelen profil frissítés!'
+        message: err.response.data.error
       }
     }
   }

@@ -29,36 +29,39 @@ export class NavbarComponent {
       if(this.isLoggedIn){
         this.loggedUserName= this.auth.loggedUser().name
       }
-      
+      this.isAdmin =this.auth.isAdmin()
       this.setupMenu(res);
     })
-    //this.isAdmin = this.auth.isAdmin();
-    console.log(this.auth.isAdmin())
+    
+    
+   
   }
 
   setupMenu(Isloggedin:boolean) {
     
     this.navItems = [
-          { name: 'Calendar', url: 'calendar', icon: '' },
-          { name: 'Booking', url: 'booking', icon: '' },
-          
-    ...(Isloggedin
-      ? [
-        { name: 'Profile', url: 'profile', icon: '' },
-        { name: 'Kilépés', url: 'logout', icon: '' }, 
-        ...(this.isAdmin) ? [
-        
-        { name: 'Bookings', url: 'bookings', icon: '' },
-        { name: 'Users', url: 'users', icon: '' },
-
-      ]:[]]
-        
-      : [
-        { name: 'Sign up', url: 'registration', icon: '' },
-        { name: 'Sign in', url: 'login', icon: '' },
-        ]),
-          
-  ];
+      { name: 'Calendar', url: 'calendar', icon: '' },
+      { name: 'Booking', url: 'booking', icon: '' },
+    
+      ...(Isloggedin
+        ? [
+            ...(this.isAdmin
+              ? [
+                  
+                  { name: 'Bookings', url: 'bookings', icon: '' },
+                  { name: 'Users', url: 'users', icon: '' },
+                ]
+              : []),
+            { name: 'Profile', url: 'profile', icon: '' },
+            { name: 'Kilépés', url: 'logout', icon: '' },
+          ]
+        : [
+            { name: 'Sign up', url: 'registration', icon: '' },
+            { name: 'Sign in', url: 'login', icon: '' },
+          ]
+      ),
+    ];
+    
   }
 
 }

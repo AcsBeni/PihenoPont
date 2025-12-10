@@ -11,10 +11,11 @@
       <div class="footer-col">
         <h3>Quick Links</h3>
         <ul>
-          <li><a href="/main">Home</a></li>
-          <li><a href="/booking">Booking</a></li>
-          <li><a href="/calendar">Calendar</a></li>
-          <li><span><a href="/registration">Sign up!</a>/<a href="/login">Sign in!</a></span></li>
+          <li><a href="/main">Home <i class="bi bi-house"></i></a></li>
+          <li><a href="/booking">Booking <i class="bi bi-journal-text"></i></a></li>
+          <li><a href="/calendar">Calendar <i class="bi bi-calendar"></i></a></li>
+           <li *ngIf="!isLoggedIn"><span><a href="/registration">Sign up! <i class="bi bi-arrow-up-circle"></i></a>/
+            <a href="/login">Sign in! <i class="bi bi-box-arrow-up-left"></i></a></span></li>
         </ul>
       </div>
 

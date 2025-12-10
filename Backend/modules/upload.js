@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/', upload.single('image'), (req, res)=>{
+router.post('/upload', upload.single('image'), (req, res)=>{
     if (!req.file){
         return res.status(500).json({ error: 'Nincsfálj feltöltve!' });
     }

@@ -6,6 +6,7 @@ import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
 import { Resp } from '../../../interfaces/apiresponse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,8 @@ export class ProfileComponent {
   constructor(    
     private api:ApiService,
     private message:MessageService,
-    private auth:AuthService
+    private auth:AuthService,
+    private router:Router,
     ){
   }
 //Form adatok
@@ -42,7 +44,10 @@ ngOnInit(): void{
      
   
   this.User = this.auth.loggedUser()
-  console.log(this.User.id)
+  if(!this.User){
+    this.router.navigate(['/main']);
+  }
+  
   
 }
 Profileupdate(){

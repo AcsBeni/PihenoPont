@@ -40,24 +40,24 @@ export class NavbarComponent {
   setupMenu(Isloggedin:boolean) {
     
     this.navItems = [
-      { name: 'Calendar', url: 'calendar', icon: '' },
-      { name: 'Booking', url: 'booking', icon: '' },
+      { name: 'Calendar', url: 'calendar', icon: 'bi-calendar' },
+      { name: 'Booking', url: 'booking', icon: 'bi-journal-text' },
     
       ...(Isloggedin
         ? [
             ...(this.isAdmin
               ? [
                   
-                  { name: 'Bookings', url: 'bookings', icon: '' },
-                  { name: 'Users', url: 'users', icon: '' },
+                  { name: 'Bookings', url: 'bookings', icon: 'bi-journal-plus'},
+                  { name: 'Accommodations', url: 'accommodations', icon: ' bi-house-add' },
                 ]
               : []),
-            { name: 'Profile', url: 'profile', icon: '' },
-            { name: 'Kilépés', url: 'logout', icon: '' },
+            { name: 'Profile', url: 'profile', icon: 'bi-person-circle' },
+            { name: 'Kilépés', url: 'logout', icon: 'bi-box-arrow-right' },
           ]
         : [
-            { name: 'Sign up', url: 'registration', icon: '' },
-            { name: 'Sign in', url: 'login', icon: '' },
+            { name: 'Sign up', url: 'registration', icon: 'bi-arrow-up-circle' },
+            { name: 'Sign in', url: 'login', icon: 'bi-box-arrow-up-left' },
           ]
       ),
     ];

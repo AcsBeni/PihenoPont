@@ -1,8 +1,10 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <span>
-      <span id="titleicon"></span>
-      <a class="navbar-brand" routerLink="main">{{title}}
+      
+      <a class="navbar-brand" routerLink="main">
+        <span ><img id="icon" src="./favicon.ico" alt=""></span>
+        {{title}}
         <span *ngIf="isLoggedIn"> - {{loggedUserName}}</span>
       </a>
     </span>
@@ -17,7 +19,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
         <li class="nav-item" *ngFor="let items of navItems">
-          <a class="nav-link" routerLink="{{items.url}}">{{items.name}}</a>
+          <a class="nav-link" routerLink="{{items.url}}">
+            <i class="bi {{items.icon}}"></i>&nbsp;&nbsp;{{items.name}}
+          </a>
         </li>
       </ul>
     </div>

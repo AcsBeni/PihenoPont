@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { AccommodationsComponent } from './components/admin/accommodations/accommodations.component';
 import { BookingsComponent } from './components/admin/bookings/bookings.component';
-import { UsersComponent } from './components/admin/users/users.component';
 import { BookingComponent } from './components/user/booking/booking.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { LogoutComponent } from './components/user/logout/logout.component';
@@ -23,7 +22,6 @@ export const routes: Routes = [
     //ADMIN
     {path: 'accommodations', component:AccommodationsComponent},
     {path: 'bookings', component:BookingsComponent},
-    {path: 'users', component:UsersComponent},
 
     //USER
     {path: 'booking', component:BookingComponent},

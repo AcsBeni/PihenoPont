@@ -1,3 +1,45 @@
 @host = http://localhost
 @port = 3000
 @url = {{host}}:{{port}}
+
+
+
+### Get all accommodations
+
+GET {{url}}/accommodations
+Content-Type: application/json
+
+
+### Get accommodation by ID
+GET {{url}}/accommodations/5
+Content-Type: application/json
+
+
+###Add accommodation
+POST {{url}}/accommodations
+Content-Type: application/json
+
+{
+   "name": "Grand Hall",
+  "description": "Updated description",
+  "address": "New Address 12",
+  "capacity": 200,
+  "basePrice": 199.99,
+  "active": 1
+}
+
+###Update one accommodation
+PATCH {{url}}/accommodations/5
+Content-Type: application/json
+
+{
+   "name": "Grand Hall",
+  "description": "Updated description",
+  "address": "New Address 12",
+  "capacity": 200,
+  "basePrice": 199.99,
+  "active": 1
+}
+
+### Delete accommodation by ID
+DELETE {{url}}/accommodations/4

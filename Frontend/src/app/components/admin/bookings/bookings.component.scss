@@ -1,0 +1,125 @@
+.bookings-page {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+  animation: fadeIn 0.5s ease;
+    
+  .page-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0b3d91;
+    margin-bottom: 30px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    background: #fff;
+
+    table.bookings-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+
+      th, td {
+        padding: 15px 12px;
+        vertical-align: middle;
+      }
+
+      th {
+        background-color: #f1f3f8;
+        color: #0b3d91;
+        font-weight: 600;
+        text-align: left;
+      }
+
+      tbody tr {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+      }
+
+      td.text-end {
+        text-align: right;
+      }
+
+      /* Buttons */
+      .btn {
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: 0.2s;
+
+        &.edit-btn {
+          background: #0b3d91;
+          color: #fff;
+          margin-left: 5px;
+
+          &:hover {
+            background: #082d66;
+          }
+        }
+
+        &.delete-btn {
+          background: #d93025;
+          color: #fff;
+
+          &:hover {
+            background: #b12219;
+          }
+        }
+      }
+    }
+  }
+
+  /* Pagination */
+  .pagination {
+    margin-top: 25px;
+
+    .page-link {
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #0b3d91;
+      border: 1px solid #ddd;
+      transition: 0.2s;
+
+      &:hover {
+        background: #0b3d91;
+        color: #fff;
+      }
+    }
+
+    .page-item.active .page-link {
+      background: #0b3d91;
+      color: #fff;
+      border-color: #0b3d91;
+    }
+
+    .page-item.disabled .page-link {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .bookings-page {
+    padding: 20px 10px;
+
+    table.bookings-table th, table.bookings-table td {
+      padding: 12px 8px;
+    }
+  }
+}
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

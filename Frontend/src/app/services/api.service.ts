@@ -109,4 +109,22 @@ export class ApiService {
       }
     }
   }
+  //Email küldése
+  async sendEmail(data:any){
+    try{
+      const response = await axios.post(`${this.SERVER}/email`, data)
+      return {
+        status: 200,
+        message: response.data.message, 
+        data: response.data
+      };
+    }
+    catch(err:any){
+      console.log(err)
+      return{
+        status: 500,
+        message: err.response.data.error
+      };
+    }
+  }
 }

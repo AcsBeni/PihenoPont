@@ -1,44 +1,49 @@
 <div class="accommodation-page">
 
-    <!-- Page Title -->
-    <h2 class="page-title">Accommodations</h2>
-  
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input 
-        type="text" 
-        placeholder="Search accommodations..." 
-        [(ngModel)]="searchText"
-      >
-      <button (click)="search()">Search</button>
-    </div>
-  
-    <!-- Accommodation List -->
-    <div class="accommodation-grid">
-  
-      <div 
-        class="acc-card" 
-        *ngFor="let acc of accommodations"
-      >
-        
-        <img [src]="acc.imageUrl" alt="Accommodation Image" />
-  
-        <div class="acc-content">
-          <h3>{{ acc.name }}</h3>
-          <p class="location"><i class="bi bi-geo-alt"></i> {{ acc.location }}</p>
-          <p class="desc">{{ acc.description }}</p>
-  
-          <div class="price">From <strong>{{ acc.price }}€ / night</strong></div>
-  
-          <div class="btn-row">
-            <button class="btn edit-btn" (click)="edit(acc)">Edit</button>
-            <button class="btn delete-btn" (click)="delete(acc.id)">Delete</button>
-          </div>
-        </div>
-  
-      </div>
-  
-    </div>
-  
+  <h2 class="page-title">Accommodations</h2>
+
+  <div class="search-bar">
+    <input 
+      type="text" 
+      placeholder="Search accommodations..." 
+      [(ngModel)]="searchText"
+    >
+    <button (click)="search()">Search</button>
   </div>
-  
+
+  <div class="accommodation-grid">
+
+    <div 
+      class="acc-card" 
+      *ngFor="let acc of acco" >
+
+      <!-- Image -->
+      <img [src]="acc.imageUrl" alt="Accommodation Image" />
+
+      <div class="acc-content">
+        <h3>{{ acc.name }}</h3>
+
+        <p class="location">
+          <i class="bi bi-geo-alt"></i>
+          {{ acc.location }}
+        </p>
+
+        <p class="desc">
+          {{ acc.description }}
+        </p>
+
+        <div class="price">
+          From <strong>{{ acc.price }} € / night</strong>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn edit-btn" (click)="edit(acc)">Edit</button>
+          <button class="btn delete-btn" (click)="delete(acc.id)">Delete</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

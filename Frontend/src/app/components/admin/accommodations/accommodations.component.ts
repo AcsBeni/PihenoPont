@@ -35,7 +35,33 @@ search() {
     active: false,
     createdAt: undefined
   }
-
+  
+  acco = [
+    {
+      id: 1,
+      name: 'Lakeview Apartment',
+      location: 'Balatonfüred, Hungary',
+      description: 'Beautiful apartment with a stunning lake view, perfect for couples and families.',
+      price: 85,
+      imageUrl: 'assets/accommodations/lakeview.jpg'
+    },
+    {
+      id: 2,
+      name: 'Mountain Cabin',
+      location: 'Mátra Mountains',
+      description: 'Cozy wooden cabin surrounded by nature, ideal for a peaceful getaway.',
+      price: 65,
+      imageUrl: 'assets/accommodations/cabin.jpg'
+    },
+    {
+      id: 3,
+      name: 'City Center Studio',
+      location: 'Budapest',
+      description: 'Modern studio apartment in the heart of the city, close to attractions.',
+      price: 95,
+      imageUrl: 'assets/accommodations/city.jpg'
+    }
+  ];
   searchText=""
   edit(_t8: any) {
   }

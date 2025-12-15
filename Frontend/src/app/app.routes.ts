@@ -14,8 +14,8 @@ import { LightboxComponent } from './components/system/lightbox/lightbox.compone
 import { MessageComponent } from './components/system/message/message.component';
 import { NavbarComponent } from './components/system/navbar/navbar.component';
 import { NotfoundComponent } from './components/system/notfound/notfound.component';
-import { MainComponent } from './components/guest/main.component/main.component';
-import { CalendarComponent } from './components/guest/calendar.component/calendar.component';
+import { MainComponent } from './components/guest/main/main.component';
+import { CalendarComponent } from './components/guest/calendar/calendar.component';
 
 export const routes: Routes = [
 

@@ -59,7 +59,7 @@ export class RegistrationComponent {
       return;
     }
 
-    //Jelszavak ugyanazok
+    //Jelszavak ugyanazok-e
     if (this.NewUser.password !== this.confirmpassword) {
       this.message.show('danger', 'Hiba', "Nem ugyanaz a kettő jelszó!");
       return;
@@ -72,7 +72,20 @@ export class RegistrationComponent {
         return;
       }
       this.message.show('success', 'Ok', `Sikeresen létrehozott egy fiókot!`);
-
+      let data ={
+        
+        "to":this.NewUser.email,
+        "subject":"Regisztráció sikeres",
+        "template":"registration",
+        "data":{
+          "username": this.NewUser.name,
+          "email": this.NewUser.email,
+          "password": this.NewUser.password,
+          "loginUrl": "http://localhost:4200/login",
+          "company": "Pihenőpont"
+        }
+      }
+      this.api.sendEmail(data)
       this.NewUser = {
         name: "",
         email: "",

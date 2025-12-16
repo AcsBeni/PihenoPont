@@ -127,4 +127,41 @@ export class ApiService {
       };
     }
   }
+  //Update
+  async update(table: string, id: number, data: any) {
+    try {
+      const res = await axios.patch(
+        `${this.SERVER}/${table}/${id}`,
+        data, // api kérés
+        { headers: { 'Content-Type': 'application/json' } })
+      return {
+        status: 200,
+        data: res.data,
+        message: "Sikeres frissítés",
+      }
+    } catch (err:any) {
+      return {
+        status: 400,
+        data: err,
+        message: err.response.data.error
+      }
+    }
+  }
+    async delete(table:string, id:number){
+    try{
+      const response = await axios.delete(`${this.SERVER}/${table}/${id}`)
+      return {
+        status: 200,
+        message: "Sikeres törlés a táblából"
+      };
+     
+    }
+    catch(err:any){
+      
+      return{
+        status: 500,
+        message: err.response.data.error
+      };
+    }
+  }
 }

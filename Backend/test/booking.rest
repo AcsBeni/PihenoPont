@@ -34,7 +34,7 @@ Content-Type: application/json
   "startDate": "2025-12-20",
   "endDate": "2025-12-25",
   "persons": 4,
-  "totalPrice": 5000.00,
+  "totalPrice": 5000,
   "status": "pending"
 }
 
@@ -49,7 +49,7 @@ Content-Type: application/json
   "startDate": "2025-12-21",
   "endDate": "2025-12-26",
   "persons": 4,
-  "totalPrice": 5200.00,
+  "totalPrice": 5200,
   "status": "confirmed"
 }
 

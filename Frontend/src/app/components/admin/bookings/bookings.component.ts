@@ -7,6 +7,8 @@ import { enviroment } from '../../../enviroment/enviroment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Booking } from '../../../interfaces/booking';
+import { Resp } from '../../../interfaces/apiresponse';
+import { Accommodations } from '../../../interfaces/accommodation';
 
 @Component({
   selector: 'app-bookings.component',
@@ -15,10 +17,6 @@ import { Booking } from '../../../interfaces/booking';
   styleUrl: './bookings.component.scss',
 })
 export class BookingsComponent {
-statusChange(arg0: number) {
-throw new Error('Method not implemented.');
-}
-
 
 currency = enviroment.currency;
 
@@ -50,14 +48,14 @@ currency = enviroment.currency;
       userId: 0,
       accommodationId: 0,
       persons: 0,
-      Totalprice: 0,
+      totalPrice: 0,
       status: 'pending',
       accommodation: ''
     }
     formModal: any;
     editMode=false
 
-    
+    accommodations:Accommodations[]=[]
     bookings:Booking[]=[]
 
     activeTab: string = 'userinfo';
@@ -65,7 +63,21 @@ currency = enviroment.currency;
    ngOnInit(): void {
       this.getLoggedUser();
       this.getBookings();
+      this.getAccommodations();
+      
     }
+  getAccommodations(){
+    this.api.selectAll('accommodations').then((res) => {
+      console.log(res.data)
+      this.accommodations = res.data;
+     
+      
+    });
+  }
+  updateAccommodationId(selectedname: string) {
+  this.selectedBooking.accommodationId = Number(this.accommodations.find(acc => acc.name === selectedname)?.id || null);
+}
+  
 
   getBookings() {
     this.api.selectAll('bookings/fulldata').then((res) => {
@@ -73,6 +85,7 @@ currency = enviroment.currency;
       this.bookings = res.data;
       this.totalPages = Math.ceil(this.bookings.length / this.pageSize);
       this.setPage(1)
+      
     });
   }
 
@@ -87,22 +100,55 @@ currency = enviroment.currency;
       this.pagedBooking = this.bookings.slice(startIndex, endIndex)
   }
   
-  bookingDelete(arg0: number|undefined) {
-  throw new Error('Method not implemented.');
-  }
+  
   editBooking(id: number) {
     const idx = this.bookings.findIndex(u => u.id === id);
       if (idx !== -1) {
         this.selectedBooking = this.bookings[idx];
-        console.log(this.selectedBooking)
-       //this.selectedBooking.startDate = this.selectedBooking.startDate.split('T')[0];
-      //this.selectedBooking.endDate = this.selectedBooking.endDate.split('T')[0];
-
       } else {
         this.message.show('warning', 'Hiba', 'A felhasználó nem található!');
-      }
-      ;
+      };
      
   }
+    confirmEdit() {
+      this.api.update("bookings", Number(this.selectedBooking.id), this.selectedBooking).then((res:Resp)=>{
+          if(res.status===400){
+            this.message.show('danger', 'Hiba',  `${res.message}`)
+            return
+          }
+          
+          if(res.status===200){
+            this.message.show('success','Ok', `${res.message}`)
+            this.getBookings();
+          }
+        })
+      
+    }
+    
+    setDeleteId(id: number) {
+       const idx = this.bookings.findIndex(u => u.id === id);
+      if (idx !== -1) {
+        this.selectedBooking = this.bookings[idx];
+      } else {
+        this.message.show('warning', 'Hiba', 'A felhasználó nem található!');
+      };
+    }
+    confirmDelete() {
+      this.api.delete("bookings", Number(this.selectedBooking.id)).then(res=>{
+          if(res.status===400){
+            this.message.show('danger', 'Hiba',  `${res.message}`)
+            return
+          }
+          
+          if(res.status===200){
+            this.message.show('success','Ok', `${res.message}`)
+            this.getBookings();
+          }
+        })
+    }
+      
+    
+
+
 
 }

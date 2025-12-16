@@ -5,7 +5,7 @@ export interface Booking{
     startDate?:Date,
     endDate?:Date,
     persons:number,
-    Totalprice:number,
+    totalPrice:number,
     status: "pending"|"confirmed"|"cancelled",
     createdAt?:Date,
     accommodation:string,

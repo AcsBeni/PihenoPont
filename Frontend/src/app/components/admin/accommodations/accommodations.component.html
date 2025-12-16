@@ -10,6 +10,8 @@
     >
     <button (click)="search()">Search</button>
   </div>
+  <button class="acc-card" data-bs-toggle="modal" data-bs-target="#editAccommodationModal" >Add new accommodation</button>
+  
 
   <div class="accommodation-grid">
 
@@ -46,4 +48,87 @@
 
   </div>
 
+</div>
+
+
+
+<!-- Edit Accommodation Modal -->
+<div class="modal fade" id="editAccommodationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content edit-modal">
+
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Edit Accommodation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form #editForm="ngForm">
+
+          <div class="row g-3">
+            <!-- Name -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="accName" placeholder="Name" [(ngModel)]="selectedAccommodation.name" name="name" required>
+                <label for="accName">Name</label>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="accAddress" placeholder="Address" [(ngModel)]="selectedAccommodation.address" name="address" required>
+                <label for="accAddress">Address</label>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea class="form-control" id="accDescription" placeholder="Description" [(ngModel)]="selectedAccommodation.description" name="description" style="height:100px;" required></textarea>
+                <label for="accDescription">Description</label>
+              </div>
+            </div>
+            <!--File-->
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Default file input example</label>
+              <input class="form-control" type="file" id="formFile">
+            </div>
+            <!-- Capacity -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="accCapacity" placeholder="Capacity" [(ngModel)]="selectedAccommodation.capacity" name="capacity" required>
+                <label for="accCapacity">Capacity</label>
+              </div>
+            </div>
+
+            <!-- Base Price -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="accPrice" placeholder="Base Price" [(ngModel)]="selectedAccommodation.basePrice" name="basePrice" required>
+                <label for="accPrice">Base Price (€)</label>
+              </div>
+            </div>
+
+            <!-- Active -->
+            <div class="col-md-6">
+              <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="accActive" [(ngModel)]="selectedAccommodation.active" name="active">
+                <label class="form-check-label" for="accActive">Active</label>
+              </div>
+            </div>
+
+            
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn save-btn" (click)="updateAccommodation()">Save Changes</button>
+      </div>
+
+    </div>
+  </div>
 </div>

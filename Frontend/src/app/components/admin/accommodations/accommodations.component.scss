@@ -138,7 +138,74 @@
       }
     }
   }
-  
+  .edit-modal {
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  border: none;
+
+  .modal-header {
+    border-bottom: none;
+    padding: 20px 25px;
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0b3d91;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .modal-body {
+    padding: 15px 25px;
+
+    .form-floating {
+      margin-bottom: 15px;
+    }
+
+    .form-check {
+      margin-top: 10px;
+    }
+  }
+
+  .modal-footer {
+    border-top: none;
+    padding: 20px 25px;
+    display: flex;
+    gap: 10px;
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .cancel-btn {
+      background: #e0e0e0;
+      color: #333;
+
+      &:hover {
+        background: #cfcfcf;
+      }
+    }
+
+    .save-btn {
+      background: #0b3d91;
+      color: #fff;
+
+      &:hover {
+        background: #082d66;
+      }
+    }
+  }
+}
+
+
+
+
   /* Responsive tweaks */
   @media (max-width: 576px) {
     .search-bar {

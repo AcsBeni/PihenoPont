@@ -13,6 +13,9 @@ import { MessageService } from '../../../services/message.service';
   styleUrl: './accommodations.component.scss',
 })
 export class AccommodationsComponent {
+updateAccommodation() {
+throw new Error('Method not implemented.');
+}
 
 search() {
 }
@@ -23,7 +26,15 @@ search() {
   ){
 
   }
-
+  selectedAccommodation:Accommodations={
+    id: 0,
+    name: '',
+    description: '',
+    address: '',
+    capacity: 0,
+    basePrice: 0,
+    active: false
+  }
   accommodations:Accommodations[]=[];
   accommodation:Accommodations={
     id: 0,

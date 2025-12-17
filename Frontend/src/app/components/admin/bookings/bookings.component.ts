@@ -102,14 +102,16 @@ currency = enviroment.currency;
   
   
   editBooking(id: number) {
-    const idx = this.bookings.findIndex(u => u.id === id);
-      if (idx !== -1) {
-        this.selectedBooking = this.bookings[idx];
-      } else {
-        this.message.show('warning', 'Hiba', 'A felhasználó nem található!');
-      };
-     
+  const booking = this.bookings.find(b => b.id === id);
+
+  if (!booking) {
+    this.message.show('warning', 'Error', 'Booking not found!');
+    return;
   }
+  this.selectedBooking = { ...booking };
+  this.updateAccommodationId(this.selectedBooking.accommodation);
+  }
+
     confirmEdit() {
       this.api.update("bookings", Number(this.selectedBooking.id), this.selectedBooking).then((res:Resp)=>{
           if(res.status===400){

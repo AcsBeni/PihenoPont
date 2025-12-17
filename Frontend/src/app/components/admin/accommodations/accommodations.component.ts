@@ -18,13 +18,20 @@ throw new Error('Method not implemented.');
 }
 
 search() {
+  const text = this.searchText.toLowerCase();
+
+  this.accommodations = this.accommodations.filter(acc =>
+    acc.name.toLowerCase().includes(text) ||
+    acc.address.toLowerCase().includes(text)
+  );
 }
+
   constructor(
     private api:ApiService,
     private auth:AuthService,
     private message:MessageService
   ){
-
+    
   }
   selectedAccommodation:Accommodations={
     id: 0,
@@ -47,32 +54,31 @@ search() {
     createdAt: undefined
   }
   
-  acco = [
-    {
-      id: 1,
-      name: 'Lakeview Apartment',
-      location: 'Balatonfüred, Hungary',
-      description: 'Beautiful apartment with a stunning lake view, perfect for couples and families.',
-      price: 85,
-      imageUrl: 'assets/accommodations/lakeview.jpg'
-    },
-    {
-      id: 2,
-      name: 'Mountain Cabin',
-      location: 'Mátra Mountains',
-      description: 'Cozy wooden cabin surrounded by nature, ideal for a peaceful getaway.',
-      price: 65,
-      imageUrl: 'assets/accommodations/cabin.jpg'
-    },
-    {
-      id: 3,
-      name: 'City Center Studio',
-      location: 'Budapest',
-      description: 'Modern studio apartment in the heart of the city, close to attractions.',
-      price: 95,
-      imageUrl: 'assets/accommodations/city.jpg'
-    }
-  ];
+  ngOnInit(): void {
+  this.loadAccommodations();
+}
+editMode = false;
+
+loadAccommodations() {
+  this.api.selectAll('accommodations').then(res => {
+    this.accommodations = res.data;
+  });
+}
+openAddModal() {
+  this.editMode = false;
+
+  this.selectedAccommodation = {
+    id: 0,
+    name: '',
+    description: '',
+    address: '',
+    capacity: 0,
+    basePrice: 0,
+    active: true
+  };
+}
+
+
   searchText=""
   edit(_t8: any) {
   }

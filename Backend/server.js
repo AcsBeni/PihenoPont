@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 var cors = require('cors');
 const app = express();
 const logger = require("./utils/logger")
@@ -20,9 +21,9 @@ app.use('/email', email)
 app.use('/bookings' , bookings)
 app.use('/accommodations' , accommodations)
 
-app.listen(process.env.PORT, () => {
-    
-    logger.info(`Server listening on ${process.env.PORT}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    logger.info(`Server listening on ${PORT}`);
 });
 
 /*

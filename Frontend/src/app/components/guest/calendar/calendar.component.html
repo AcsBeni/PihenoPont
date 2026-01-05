@@ -1,1 +1,9 @@
-<p>calendar.component works!</p>
+<div class="calendar-card card p-3">
+	<div *ngIf="loading" class="text-center py-5">
+		Betöltés...
+	</div>
+		<div *ngIf="!loading">
+			<div *ngIf="errorMessage" class="alert alert-warning">{{ errorMessage }}</div>
+			<full-calendar [options]="calendarOptions"></full-calendar>
+		</div>
+</div>

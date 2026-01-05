@@ -1,0 +1,31 @@
+/* Simple styling to match site theme */
+.calendar-card {
+	background: var(--bs-body-bg, #fff);
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* FullCalendar overrides to fit container */
+:host ::ng-deep .fc {
+	font-family: inherit;
+}
+
+:host ::ng-deep .fc .fc-toolbar-title {
+	font-weight: 600;
+}
+
+/* Booking status colors */
+:host ::ng-deep .fc .booking-status-pending {
+	background-color: #f4b400 !important;
+	border-color: #f4b400 !important;
+}
+:host ::ng-deep .fc .booking-status-confirmed {
+	background-color: #0b3d91 !important;
+	border-color: #0b3d91 !important;
+	color: #fff !important;
+}
+:host ::ng-deep .fc .booking-status-cancelled {
+	background-color: #d9534f !important;
+	border-color: #d9534f !important;
+}
+

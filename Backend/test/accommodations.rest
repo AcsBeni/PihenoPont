@@ -14,6 +14,15 @@ Content-Type: application/json
 GET {{url}}/accommodations/5
 Content-Type: application/json
 
+
+###Add accommodationImage
+POST {{url}}/upload/3
+Content-Type: application/json
+
+{
+  "imagePath":"ELEFE"
+}
+
 ###Add accommodation
 POST {{url}}/accommodations
 Content-Type: application/json

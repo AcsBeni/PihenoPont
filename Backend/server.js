@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/uploads', express.static('uploads'));
+app.use('/upload', express.static('uploads'));
 app.use('/upload', upload);
 app.use('/users', users)
 app.use('/email', email)

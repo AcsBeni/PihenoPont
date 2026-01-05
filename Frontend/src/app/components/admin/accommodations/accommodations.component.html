@@ -10,7 +10,7 @@
     >
     <button (click)="search()">Search</button>
   </div>
-  <button class="acc-card" data-bs-toggle="modal" data-bs-target="#editAccommodationModal" >Add new accommodation</button>
+  <button class="acc-card mb-3" data-bs-toggle="modal" data-bs-target="#addAccommodationModal">Add new accommodation</button>
   
 
   <div class="accommodation-grid">
@@ -38,8 +38,8 @@
         </div>
 
         <div class="btn-row">
-          <button class="btn edit-btn" (click)="edit(acc)">Edit</button>
-          <button class="btn delete-btn" (click)="delete(acc.id)">Delete</button>
+          <button class="btn edit-btn"  data-bs-toggle="modal" data-bs-target="#editAccommodationModal"  (click)="editAccommodation(acc.id!)">Edit</button>
+          <button class="btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="setDeleteId(acc.id!)">Delete</button>
         </div>
       </div>
 
@@ -49,6 +49,78 @@
 
 </div>
 
+
+<!-- Add Accommodation Modal -->
+<div class="modal fade" id="addAccommodationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content edit-modal">
+
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Add Accommodation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form #editForm="ngForm">
+
+          <div class="row g-3">
+            <!-- Name -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="accName" placeholder="Name" [(ngModel)]="newAccommodation.name" name="name" required>
+                <label for="accName">Name</label>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="accAddress" placeholder="Address" [(ngModel)]="newAccommodation.address" name="address" required>
+                <label for="accAddress">Address</label>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea class="form-control" id="accDescription" placeholder="Description" [(ngModel)]="newAccommodation.description" name="description" style="height:100px;" required></textarea>
+                <label for="accDescription">Description</label>
+              </div>
+            </div>
+            <!--File-->
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Default file input example</label>
+              <input class="form-control" type="file" id="formFile">
+            </div>
+            <!-- Capacity -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="accCapacity" placeholder="Capacity" [(ngModel)]="newAccommodation.capacity" name="capacity" required>
+                <label for="accCapacity">Capacity</label>
+              </div>
+            </div>
+
+            <!-- Base Price -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="accPrice" placeholder="Base Price" [(ngModel)]="newAccommodation.basePrice" name="basePrice" required>
+                <label for="accPrice">Base Price (€)</label>
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn save-btn"  (click)="addNewAccommodation()" data-bs-dismiss="modal">Add</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 <!-- Edit Accommodation Modal -->
@@ -125,7 +197,41 @@
 
       <div class="modal-footer">
         <button class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn save-btn" (click)="updateAccommodation()">Save Changes</button>
+        <button class="btn save-btn" (click)="confirmEdit()" data-bs-dismiss="modal">Save Changes</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content delete-modal">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          Confirm Deletion
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          Are you sure you want to delete this item?
+        </p>
+        <p class="warning-text">
+          This action cannot be undone.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn cancel-btn" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button class="btn delete-btn" (click)="confirmDelete()" data-bs-dismiss="modal">
+          Delete
+        </button>
       </div>
 
     </div>

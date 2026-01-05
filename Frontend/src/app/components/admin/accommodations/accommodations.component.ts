@@ -5,6 +5,7 @@ import { Accommodations } from '../../../interfaces/accommodation';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
 import { MessageService } from '../../../services/message.service';
+import { Resp } from '../../../interfaces/apiresponse';
 
 @Component({
   selector: 'app-accommodations',
@@ -13,13 +14,10 @@ import { MessageService } from '../../../services/message.service';
   styleUrl: './accommodations.component.scss',
 })
 export class AccommodationsComponent {
-updateAccommodation() {
-throw new Error('Method not implemented.');
-}
 
 search() {
   const text = this.searchText.toLowerCase();
-
+  
   this.accommodations = this.accommodations.filter(acc =>
     acc.name.toLowerCase().includes(text) ||
     acc.address.toLowerCase().includes(text)
@@ -33,7 +31,19 @@ search() {
   ){
     
   }
+  searchText=""
+  editMode = false;
+
   selectedAccommodation:Accommodations={
+    id: 0,
+    name: '',
+    description: '',
+    address: '',
+    capacity: 0,
+    basePrice: 0,
+    active: false
+  }
+  newAccommodation:Accommodations={
     id: 0,
     name: '',
     description: '',
@@ -54,35 +64,87 @@ search() {
     createdAt: undefined
   }
   
-  ngOnInit(): void {
-  this.loadAccommodations();
+ngOnInit(): void {
+  this.getAccommodations();
 }
-editMode = false;
 
-loadAccommodations() {
+
+getAccommodations() {
   this.api.selectAll('accommodations').then(res => {
     this.accommodations = res.data;
   });
 }
 openAddModal() {
   this.editMode = false;
-
-  this.selectedAccommodation = {
-    id: 0,
-    name: '',
-    description: '',
-    address: '',
-    capacity: 0,
-    basePrice: 0,
-    active: true
-  };
 }
 
+//EDIT
+  editAccommodation(id: number) {
+    const accommodation = this.accommodations.find(b => b.id === id);
 
-  searchText=""
-  edit(_t8: any) {
+    if (!accommodation) {
+      this.message.show('warning', 'Error', 'accommodations not found!');
+      return;
+    }
+    this.selectedAccommodation = { ...accommodation };
+    this.updateAccommodationId(this.selectedAccommodation.name);
   }
-  delete(arg0: any) {
+  updateAccommodationId(selectedname: string) {
+    this.selectedAccommodation.id = Number(this.accommodations.find(acc => acc.name === selectedname)?.id || null);
+  }
+  confirmEdit() {
+      this.api.update("accommodations", Number(this.selectedAccommodation.id), this.selectedAccommodation).then((res:Resp)=>{
+          if(res.status===400){
+            this.message.show('danger', 'Hiba',  `${res.message}`)
+            return
+          }
+            
+          if(res.status===200){
+            this.message.show('success','Ok', `${res.message}`)
+              this.getAccommodations();
+          }
+        })
+        
+  }
+  
+  //Delete
+  setDeleteId(id: number) {
+    const idx = this.accommodations.findIndex(u => u.id === id);
+    if (idx !== -1) {
+      this.selectedAccommodation = this.accommodations[idx];
+    } else {
+      this.message.show('warning', 'Hiba', 'A felhasználó nem található!');
+    };
+  }
+  confirmDelete() {
+    this.api.delete("accommodations", Number(this.selectedAccommodation.id)).then(res=>{
+        if(res.status===400){
+          this.message.show('danger', 'Hiba',  `${res.message}`)
+          return
+        }
+          
+        if(res.status===200){
+          this.message.show('success','Ok', `${res.message}`)
+          this.getAccommodations();
+        }
+    })
+  }
+  //ADDNEW
+  
+  addNewAccommodation() {
+    this.api.insert("accommodations", this.newAccommodation).then(res=>{
+       if(res.status===400){
+          this.message.show('danger', 'Hiba',  `${res.message}`)
+          return
+        }
+          
+        if(res.status===200){
+          this.message.show('success','Ok', `${res.message}`)
+          this.getAccommodations();
+        }
+    })
   }
 
+
+ 
 }

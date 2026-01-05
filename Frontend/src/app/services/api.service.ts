@@ -11,6 +11,26 @@ export class ApiService {
 
   constructor() {
   }
+  //Hozzáadás
+  async insert(table:string, data:any){
+    try{
+      const response = await axios.post(`${this.SERVER}/${table}`, data)
+      return {
+        status: 200,
+        message: "Sikeres adatfelvétel a táblába", 
+        data: response.data
+      };
+     
+    }
+    catch(err:any){
+      console.log(err)
+      return{
+        status: 500,
+        message: "Hiba a művelet során"
+      };
+    }
+  }
+
   //Kiválasztás minden
   async selectAll(table: string): Promise<Resp> {
     try {

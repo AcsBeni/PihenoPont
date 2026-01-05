@@ -17,9 +17,7 @@
 
     <div class="acc-card" *ngFor="let acc of accommodations">
 
-
-      <!-- Image -->
-    <!--<img [src]="acc." alt="Accommodation Image" />-->
+      <!--<img *ngIf="acc.image" src="{{serverUrl}}/uploads/{{acc.image}}" alt="{{acc.name}}" class="thumbnail">-->
 
       <div class="acc-content">
         <h3>{{ acc.name }}</h3>
@@ -163,7 +161,7 @@
             <!--File-->
             <div class="mb-3">
               <label for="formFile" class="form-label">Default file input example</label>
-              <input class="form-control" type="file" id="formFile">
+              <input class="form-control" type="file" id="formFile"(change)="onFileSelected($event)">
             </div>
             <!-- Capacity -->
             <div class="col-md-6">

@@ -33,6 +33,8 @@ search() {
   }
   searchText=""
   editMode = false;
+  imagePath	:File | null = null;
+
 
   selectedAccommodation:Accommodations={
     id: 0,
@@ -79,9 +81,13 @@ openAddModal() {
 }
 
 //EDIT
+  onFileSelected(event:any){
+    this.imagePath = event.target.files[0];
+  }
+
   editAccommodation(id: number) {
     const accommodation = this.accommodations.find(b => b.id === id);
-
+    this.imagePath = null
     if (!accommodation) {
       this.message.show('warning', 'Error', 'accommodations not found!');
       return;
@@ -92,20 +98,31 @@ openAddModal() {
   updateAccommodationId(selectedname: string) {
     this.selectedAccommodation.id = Number(this.accommodations.find(acc => acc.name === selectedname)?.id || null);
   }
-  confirmEdit() {
-      this.api.update("accommodations", Number(this.selectedAccommodation.id), this.selectedAccommodation).then((res:Resp)=>{
-          if(res.status===400){
-            this.message.show('danger', 'Hiba',  `${res.message}`)
-            return
-          }
-            
-          if(res.status===200){
-            this.message.show('success','Ok', `${res.message}`)
-              this.getAccommodations();
-          }
-        })
-        
+  async confirmEdit() {
+  if (this.imagePath) {
+    const formData = new FormData();
+    formData.append('image', this.imagePath);
+
+    const res = await this.api.imgUpload("upload",Number(this.selectedAccommodation.id),formData);
+    if (res.status !== 200) {
+      this.message.show('danger', 'Hiba', res.message!);
+      return;
+    }
   }
+
+  this.api.update("accommodations",Number(this.selectedAccommodation.id),this.selectedAccommodation).then((res: Resp) => {
+    if (res.status === 400) {
+      this.message.show('danger', 'Hiba', res.message!);
+      return;
+    }
+
+    if (res.status === 200) {
+      this.message.show('success', 'Ok', res.message!);
+      this.getAccommodations();
+    }
+  });
+}
+
   
   //Delete
   setDeleteId(id: number) {
@@ -132,6 +149,7 @@ openAddModal() {
   //ADDNEW
   
   addNewAccommodation() {
+    
     this.api.insert("accommodations", this.newAccommodation).then(res=>{
        if(res.status===400){
           this.message.show('danger', 'Hiba',  `${res.message}`)

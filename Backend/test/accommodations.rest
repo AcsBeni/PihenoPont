@@ -14,7 +14,6 @@ Content-Type: application/json
 GET {{url}}/accommodations/5
 Content-Type: application/json
 
-
 ###Add accommodation
 POST {{url}}/accommodations
 Content-Type: application/json

@@ -22,21 +22,47 @@ const storage = multer.diskStorage({
   }
 });
 
-
-
 const upload = multer({ storage: storage });
 
-router.post('/upload', upload.single('image'), (req, res)=>{
+router.post('/', upload.single('image'), (req, res)=>{
     if (!req.file){
         return res.status(500).json({ error: 'Nincsfálj feltöltve!' });
     }
     res.status(200).json({
         message: 'Fájl feltöltve!',
         filename: req.file.filename,
-        path: '/images'
+        path: '/uploads'
     });
 });
 
+//Kép hozzáadása a szálláshoz
+router.post("/:id", upload.single('image'), (req, res) => {
+  const accommodationId = req.params.id;
 
+  if (!req.file) {
+    return res.status(400).json({ error: "Nincs fájl feltöltve!" });
+  }
 
+  const imagePath = `/uploads/${req.file.filename}`;
+
+  query(
+    `INSERT INTO accommodation_images (accommodationId, imagePath) VALUES (?, ?)`,
+    [accommodationId, imagePath],
+    (error, results) => {
+      if (error) {
+        return res.status(500).json({
+          errno: error.errno,
+          msg: "Hiba fordult elő az adatbázis mentéskor"
+        });
+      }
+
+      res.status(200).json({
+        message: "Kép sikeresen feltöltve és elmentve",
+        imagePath,
+        filename: req.file.filename,
+        path: '/uploads'
+      });
+    }
+  );
+});
 module.exports = router;

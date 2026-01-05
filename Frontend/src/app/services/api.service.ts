@@ -30,6 +30,23 @@ export class ApiService {
       };
     }
   }
+  //Kép feltöltése
+  async imgUpload(table: string, id:number,formData: FormData): Promise<Resp> {
+    try {
+      const res = await axios.post(`${this.SERVER}/${table}/${id}`, formData);
+      return {
+        status: 200,
+        data: res.data
+
+      }
+    } catch (err:any) {
+      return {
+        status: 400,
+        message: err.response.data.error,
+        data: err
+      }
+    }
+  }
 
   //Kiválasztás minden
   async selectAll(table: string): Promise<Resp> {

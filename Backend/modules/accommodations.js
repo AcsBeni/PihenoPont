@@ -12,6 +12,54 @@ router.get("/accommodationfull", (req, res)=>{
         res.status(200).json(results)
     },req);
 })
+//Teljes Szállás hozzáadása
+router.post("/accommodationfull", (req, res) => {
+  const { name, description, address, capacity, basePrice, active, imagePath } = req.body;
+
+   query(
+    `INSERT INTO accommodations 
+     (name, description, address, capacity, basePrice, active)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [name, description, address, capacity, basePrice, active],
+    (error, result) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({
+          errno: error.errno,
+          msg: "Hiba fordult elő a szállás mentésekor"
+        });
+      }
+      const accommodationId = result.insertId;
+      if (!imagePath) {
+        return res.status(200).json({
+          message: "Szállás sikeresen létrehozva",
+          accommodationId
+        });
+      }
+      console.log(accommodationId)
+      // Kép hozzáadása
+      query(
+        `INSERT INTO accommodation_images (accommodationId, imagePath)
+         VALUES (?, ?)`,
+        [accommodationId, imagePath],
+        (error) => {
+          if (error) {
+            console.error(error);
+            return res.status(500).json({
+              msg: "Szállás létrejött, de a kép mentése sikertelen"
+            });
+          }
+
+          return res.status(200).json({
+            message: "Szállás és kép sikeresen létrehozva",
+            accommodationId,
+            imagePath
+          });
+        }
+      );
+    }
+  );
+});
 //szállások lehívása
 router.get("/", (req, res)=>{
     

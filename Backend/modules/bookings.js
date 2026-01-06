@@ -40,6 +40,15 @@ router.get("/fulldata/:id", (req, res)=>{
         res.status(200).json(results)
     },req);
 })
+//foglalás view table lehívása uid-vel
+router.get("/fulldataUID/:uid", (req, res)=>{
+    let uid = req.params.uid;
+    query(`SELECT * FROM bookingfull WHERE userId=?` ,[uid], (error, results) =>{
+        if(error) return res.status(500).send({errno: error.errno, msg:"Hiba fordult elő "}) ;
+      
+        res.status(200).json(results)
+    },req);
+})
 //foglalás hozzáadása
 router.post("/", (req, res)=>{
     const {userId,accommodationId, startDate, endDate, persons, totalPrice, status} = req.body;

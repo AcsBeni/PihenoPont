@@ -54,7 +54,8 @@ search() {
     address: '',
     capacity: 0,
     basePrice: 0,
-    active: false
+    active: false,
+    imagePath:""
   }
   accommodations:Accommodations[]=[];
   accommodation:Accommodations={
@@ -151,9 +152,19 @@ openAddModal() {
   }
   //ADDNEW
   
-  addNewAccommodation() {
+  async addNewAccommodation() {
     
-    this.api.insert("accommodations", this.newAccommodation).then(res=>{
+    if (this.imagePath) {
+    const formData = new FormData();
+    formData.append('image', this.imagePath);
+
+    const res = await this.api.imgUpload("upload",Number(this.selectedAccommodation.id),formData);
+    if (res.status !== 200) {
+      this.message.show('danger', 'Hiba', res.message!);
+      return;
+    }
+  }
+    this.api.insert("accommodations/accommodationfull", this.newAccommodation).then(res=>{
        if(res.status===400){
           this.message.show('danger', 'Hiba',  `${res.message}`)
           return

@@ -17,7 +17,7 @@
 
     <div class="acc-card" *ngFor="let acc of accommodations">
 
-      <!--<img *ngIf="acc.image" src="{{serverUrl}}/uploads/{{acc.image}}" alt="{{acc.name}}" class="thumbnail">-->
+      <img *ngIf="acc.imagePath" src="{{serverUrl}}{{acc.imagePath}}" alt="{{acc.name}}" class="thumbnail">
 
       <div class="acc-content">
         <h3>{{ acc.name }}</h3>

@@ -3,7 +3,15 @@ const router = express.Router();
 const {query} = require('../utils/database');
 
 
-
+//szállások view lehívása
+router.get("/accommodationfull", (req, res)=>{
+    
+    query(`SELECT * FROM accommodationfull` ,[], (error, results) =>{
+        if(error) return res.status(500).send({ errno: error.errno, msg: "Hiba fordult elő"}) ;
+      
+        res.status(200).json(results)
+    },req);
+})
 //szállások lehívása
 router.get("/", (req, res)=>{
     

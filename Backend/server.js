@@ -8,13 +8,14 @@ const upload = require("./modules/upload")
 const email = require("./modules/email")
 const bookings = require("./modules/bookings")
 const accommodations = require("./modules/accommodations")
+const path = require ('path')
 
 // Middleware-ek
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/upload', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/upload', upload);
 app.use('/users', users)
 app.use('/email', email)

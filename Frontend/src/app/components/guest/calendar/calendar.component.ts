@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
+import { Users } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-calendar',
@@ -37,10 +38,42 @@ export class CalendarComponent implements OnInit {
   private authService: AuthService
   ) {}
 
+loggedUser:Users={
+  id:0,
+  name: '',
+  password: '',
+  email: ''
+}
+
+
   async ngOnInit() {
+    this.loggedUser=this.authService.loggedUser()
     if (this.authService.isAdmin()) {
     try {
       const res = await this.api.selectAll('bookings/fulldata');
+      if (res.status === 200 && Array.isArray(res.data)) {
+        const events: EventInput[] = res.data.map((b: any) => ({
+          id: b.id?.toString(),
+          title: `${b.accommodation || ''}\n${b.email || ''}`.trim() || 'Foglalás',
+          start: b.startDate,
+          end: b.endDate,
+          extendedProps: { status: b.status }
+        }));
+        this.calendarOptions = { ...this.calendarOptions, events };
+      } else {
+        this.errorMessage = 'Nem érkezett foglalás adat a szerverről.';
+        console.warn('Unexpected bookings response', res);
+      }
+    } catch (err) {
+      console.error('Calendar load error', err);
+      this.errorMessage = 'Hiba történt a foglalások lekérésekor.';
+    } finally {
+      this.loading = false;
+    }
+  }
+  else{
+    try {
+      const res = await this.api.selectAll(`bookings/fulldata/${this.loggedUser.id}`);
       if (res.status === 200 && Array.isArray(res.data)) {
         const events: EventInput[] = res.data.map((b: any) => ({
           id: b.id?.toString(),

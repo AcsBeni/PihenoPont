@@ -6,6 +6,7 @@ import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
 import { MessageService } from '../../../services/message.service';
 import { Resp } from '../../../interfaces/apiresponse';
+import { enviroment } from '../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-accommodations',
@@ -15,6 +16,7 @@ import { Resp } from '../../../interfaces/apiresponse';
 })
 export class AccommodationsComponent {
 
+  serverUrl = enviroment.serverUrl
 search() {
   const text = this.searchText.toLowerCase();
   
@@ -72,8 +74,9 @@ ngOnInit(): void {
 
 
 getAccommodations() {
-  this.api.selectAll('accommodations').then(res => {
+  this.api.selectAll('accommodations/accommodationfull').then(res => {
     this.accommodations = res.data;
+    console.log(res.data)
   });
 }
 openAddModal() {

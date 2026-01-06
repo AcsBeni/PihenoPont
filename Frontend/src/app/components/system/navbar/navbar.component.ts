@@ -41,7 +41,7 @@ export class NavbarComponent {
     
     this.navItems = [
       { name: 'Calendar', url: 'calendar', icon: 'bi-calendar' },
-      { name: 'Booking', url: 'booking', icon: 'bi-journal-text' },
+      { name: 'Booking', url: 'bookinglist', icon: 'bi-journal-text' },
     
       ...(Isloggedin
         ? [

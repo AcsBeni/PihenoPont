@@ -6,5 +6,6 @@ export interface Accommodations{
     capacity:number,
     basePrice:number,
     active:boolean,
-    createdAt?:Date
+    createdAt?:Date,
+    imagePath?:string
 }

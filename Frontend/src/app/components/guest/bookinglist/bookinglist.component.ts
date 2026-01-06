@@ -52,6 +52,19 @@ currency = enviroment.currency;
       status: 'pending',
       accommodation: ''
     }
+
+  // Ellenőrzések
+  passwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  //User model
+  User:Users ={
+  name:"",
+  email:"",
+  password:"",
+  role:"user"
+}
+
     formModal: any;
     editMode=false
 

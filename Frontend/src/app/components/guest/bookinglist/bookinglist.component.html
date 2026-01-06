@@ -1,225 +1,79 @@
-<div class="bookinglist-page">
+<div class="form-container bookinglist-container">
 
-  <h2 class="page-title">Bookings</h2>
+  <h3 class="text-center mt-3">Bookings</h3>
+<hr>
+    <div class="row">
 
-  <div class="table-wrapper">
-    <table class="table table-hover table-striped bookings-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Accommodation</th>
-          <th>Start_date</th>
-          <th>End_date</th>
-          <th >persons</th>
-          <th>Totalprice</th>
-          <th class="text-end">Status</th>
-          <th class="text-end">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let booking of pagedBooking; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ booking.email }}</td>
-          <td>{{ booking.accommodation }}</td>
-          <td>{{ booking.startDate }}</td>
-          <td>{{ booking.endDate }}</td>
-          <td>{{booking.persons}}</td>
-          <td>{{booking.totalPrice}}</td>
-          <td class="text-end">
-            <button 
-                class="btn" 
-                [ngClass]="{
-                  'btn-danger': booking.status === 'cancelled',
-                  'btn-warning': booking.status === 'pending',
-                  'btn-success': booking.status === 'confirmed'
-                }" 
-                >
-                <i 
-                  [ngClass]="{
-                    'bi-dash-circle': booking.status === 'cancelled',
-                    'bi-hourglass-split': booking.status === 'pending',
-                    'bi-check-circle': booking.status === 'confirmed'
-                  }">
-                </i>
-              </button></td>
-          <td class="text-end">
-            <button 
-              class="btn delete-btn me-1"
-              data-bs-toggle="modal"
-              data-bs-target="#deleteModal"
-              (click)="setDeleteId(booking.id!)">
-              <i class="bi bi-dash-circle"></i>
-            </button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingModal" (click)="editBooking(booking.id!)">
-                <i class="bi bi-pencil"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="9" class="text-center">
-            Total: <strong>{{ bookings.length }}</strong>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <nav *ngIf="totalPages > 1" aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="currentpage === 1">
-        <a class="page-link" (click)="setPage(currentpage - 1)">&laquo;</a>
-      </li>
-      <li 
-        class="page-item" 
-        *ngFor="let page of [].constructor(totalPages); let i = index"
-        [class.active]="currentpage == i + 1">
-        <a class="page-link" (click)="setPage(i + 1)">{{ i + 1 }}</a>
-      </li>
-      <li class="page-item" [class.disabled]="currentpage === totalPages">
-        <a class="page-link" (click)="setPage(currentpage + 1)">&raquo;</a>
-      </li>
-    </ul>
-  </nav>
-
-</div>
-<!-- Booking Modal -->
-<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content rounded-4 shadow-lg">
-      <div class="modal-header bg-secondary text-white border-0">
-        <h5 class="modal-title" id="bookingModalLabel">Booking edit</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-4">
-        <div id="bookingForm">
-          <div class="row g-3">
-            <div class="col-md-6">
-              <div class="form-floating">
-                <input type="email" class="form-control rounded-3" id="email" placeholder="Email" required  [(ngModel)]="selectedBooking.email">
-                <label for="email">Email</label>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-floating">
-                <input type="number" class="form-control rounded-3" id="userId" placeholder="UserId" required [(ngModel)]="selectedBooking.userId" readonly> 
-                <label for="userId">UserId</label>
-              </div>
+        <!-- Left column: Email & Name -->
+        <div class="col-md-6 mb-4">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="Emailfield" [(ngModel)]="User.email" #emailModel="ngModel"
+                required
+                email >
+                <label for="Emailfield">Email address</label>
+                <small class="text-danger" 
+                *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
+                    Kérem írjon be egy helyes emailt
+                </small>
+                
             </div>
 
-            <div class="col-md-6">
-              <div class="form-floating">
-                <select 
-                  class="form-select rounded-3" 
-                  id="accommodation" 
-                  required 
-                  [(ngModel)]="selectedBooking.accommodation" 
-                  (ngModelChange)="updateAccommodationId(selectedBooking.accommodation)">
-                  
-                  <option value="" selected disabled>Select accommodation</option>
-                  <option *ngFor="let acc of accommodations" [value]="acc.name">
-                    {{ acc.name }} - {{ acc.address }}
-                  </option>
-                </select>
-                <label for="accommodation">Accommodation</label>
-              </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="Namefield" [(ngModel)]="User.name">
+                <label for="Namefield">Név</label>
             </div>
 
-            <div class="col-md-4">
-              <div class="form-floating">
-                <input 
-                  type="number" 
-                  class="form-control rounded-3" 
-                  id="accommodationId" 
-                  placeholder="Accommodation ID" 
-                  required 
-                  [(ngModel)]="selectedBooking.accommodationId" 
-                  readonly>
-                <label for="accommodationId">Accommodation ID</label>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-floating">
-                <input type="date" class="form-control rounded-3" id="start_date" placeholder="Start Date" required [(ngModel)]="selectedBooking.startDate">
-                <label for="start_date">Start Date</label>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-floating">
-                <input type="date" class="form-control rounded-3" id="end_date" placeholder="End Date" required [(ngModel)]="selectedBooking.endDate">
-                <label for="end_date">End Date</label>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-floating">
-                <input type="number" class="form-control rounded-3" id="persons" placeholder="Persons" min="1" required [(ngModel)]="selectedBooking.persons">
-                <label for="persons">Persons</label>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-floating">
-                <input type="number" step="0.01" class="form-control rounded-3" id="totalPrice" placeholder="Total Price" required [(ngModel)]="selectedBooking.totalPrice">
-                <label for="totalPrice">Total Price</label>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-floating">
-                <select class="form-select rounded-3" id="status" required [(ngModel)]="selectedBooking.status">
-                  <option value="" selected disabled>Select status</option>
-                  <option value="pending">Pending</option>
-                  <option value="confirmed">Confirmed</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
-                <label for="status">Status</label>
-              </div>
-            </div>
-          </div>
+            <button [disabled]="!emailRegExp.test(emailModel.value)" type="submit" class="btn btn-primary w-100" >Adatmódosítás</button>
         </div>
-      </div>
-      <div class="modal-footer border-0">
-        <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" form="bookingForm" class="btn btn-primary rounded-pill px-4" (click)="confirmEdit()" data-bs-dismiss="modal">confirm</button>
-      </div>
+
+        <!-- Right column: Password change -->
+        <div class="booking-box">
+    <div class="date-group">
+        <div>
+            <label for="checkin">Érkezés</label>
+            <input type="date" id="checkin">
+        </div>
+
+        <div>
+            <label for="checkout">Távozás</label>
+            <input type="date" id="checkout">
+        </div>
     </div>
-  </div>
+
+    <button onclick="saveDates()">Dátumok mentése</button>
+
+    <div class="result" id="result"></div>
 </div>
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content delete-modal">
 
-      <div class="modal-header">
-        <h5 class="modal-title">
-          <i class="bi bi-exclamation-triangle-fill"></i>
-          Confirm Deletion
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+  
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
 
-      <div class="modal-body">
-        <p>
-          Are you sure you want to delete this item?
-        </p>
-        <p class="warning-text">
-          This action cannot be undone.
-        </p>
-      </div>
 
-      <div class="modal-footer">
-        <button class="btn cancel-btn" data-bs-dismiss="modal">
-          Cancel
-        </button>
-        <button class="btn delete-btn" (click)="confirmDelete()" data-bs-dismiss="modal">
-          Delete
-        </button>
-      </div>
 
-    </div>
-  </div>
-</div>
+
+
+<script>
+function saveDates() {
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+
+    if (!checkin || !checkout) {
+        alert("Válaszd ki mindkét dátumot!");
+        return;
+    }
+
+    if (checkout <= checkin) {
+        alert("A távozás dátuma későbbi kell legyen!");
+        return;
+    }
+
+    // Itt tudod később felhasználni
+    console.log("Érkezés:", checkin);
+    console.log("Távozás:", checkout);
+
+    document.getElementById("result").innerHTML =
+        `Érkezés: <strong>${checkin}</strong><br>
+         Távozás: <strong>${checkout}</strong>`;
+}
+</script>

@@ -1,0 +1,92 @@
+.bookinglist-container h3 {
+    font-weight: 700;
+    color: #0b3d91;
+    margin-bottom: 15px;
+}
+
+/* Container styling, same as registration/login */
+.bookinglist-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .bookinglist-container {
+        padding: 25px 15px;
+       
+
+    }
+
+    .row {
+        flex-direction: column;
+    }
+}
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+.booking-box {
+
+    margin-right: 30px;
+    max-width: 280px;
+   
+}
+
+.booking-box h2 {
+    margin-bottom: 15px;
+}
+
+.date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.date-group div {
+    flex: 1;
+}
+
+label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #2c7be5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1a68d1;
+}
+
+.result {
+    margin-top: 15px;
+    font-size: 14px;
+}

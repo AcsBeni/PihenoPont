@@ -32,7 +32,6 @@ router.post("/accommodation_admin", (req, res) => {
         });
       }
       const accommodationId = result.insertId;
-      
       if (!imagePath) {
         return res.status(200).json({
           message: "Szállás sikeresen létrehozva",

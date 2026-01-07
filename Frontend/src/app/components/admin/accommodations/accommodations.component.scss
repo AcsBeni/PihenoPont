@@ -267,6 +267,23 @@
     }
   }
 }
+.add-btn {
+  padding: 12px 25px;
+  background: #0b3d91;     
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  display: inline-block;
+  text-align: center;
+
+  &:hover {
+    background: #082d66;   
+  }
+}
+
 
   /* Responsive */
   @media (max-width: 576px) {

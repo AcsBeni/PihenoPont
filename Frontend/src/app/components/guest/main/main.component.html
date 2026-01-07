@@ -22,7 +22,7 @@
     <h2 class="text-center mb-4">Featured Destinations</h2>
     <div class="featured-grid">
       <div class="card" *ngFor="let place of featuredPlaces">
-        <img [src]="place.image" class="card-img-top" alt="{{place.name}}">
+        <img *ngIf="place.imagePath" src="{{serverUrl}}{{place.imagePath}}" alt="{{place.name}}" class="thumbnail">
         <div class="card-body">
           <h5 class="card-title">{{place.name}}</h5>
           <p class="card-text">{{place.description}}</p>
@@ -49,5 +49,5 @@
   <!-- Call to Action -->
   <section class="cta-section text-center py-5">
     <h2>Ready to book your next stay?</h2>
-    <button class="btn btn-primary btn-lg mt-3" routerLink="/registration">Get Started</button>
+    <button class="btn btn-primary btn-lg mt-3" routerLink="/bookinglist">Get Started</button>
   </section>

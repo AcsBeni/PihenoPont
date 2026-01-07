@@ -64,6 +64,23 @@ export class ApiService {
       }
     }
   }
+  //Kép Frissítése
+  async imgDelete(table: string, id:number): Promise<Resp> {
+    try {
+      const res = await axios.delete(`${this.SERVER}/${table}/${id}`);
+      return {
+        status: 200,
+        data: res.data
+
+      }
+    } catch (err:any) {
+      return {
+        status: 400,
+        message: err.response.data.error,
+        data: err
+      }
+    }
+  }
   //Kiválasztás minden
   async selectAll(table: string): Promise<Resp> {
     try {

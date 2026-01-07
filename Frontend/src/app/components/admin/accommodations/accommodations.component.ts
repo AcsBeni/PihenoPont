@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { MessageService } from '../../../services/message.service';
 import { Resp } from '../../../interfaces/apiresponse';
 import { enviroment } from '../../../enviroment/enviroment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accommodations',
@@ -19,6 +20,7 @@ export class AccommodationsComponent {
   serverUrl = enviroment.serverUrl
 
   constructor(
+    private router:Router,
     private api:ApiService,
     private auth:AuthService,
     private message:MessageService
@@ -27,6 +29,8 @@ export class AccommodationsComponent {
   }
   searchText=""
   editMode = false;
+
+  IsAdmin =false
       
   addImageFile?: File | null = null;
   editImageFile?: File | null = null;
@@ -64,6 +68,11 @@ export class AccommodationsComponent {
   
 ngOnInit(): void {
   this.getAccommodations();
+  this.IsAdmin = this.auth.isAdmin()
+  if(!this.IsAdmin){
+    this.router.navigate(['/main']);
+    return
+  }
 }
 
 
@@ -154,6 +163,12 @@ search() {
     };
   }
   confirmDelete() {
+    this.api.imgDelete("upload", this.selectedAccommodation.id).then(res=>{
+      if(res.status===400){
+          this.message.show('danger', 'Hiba',  `${res.message}`)
+          return
+      }
+    })
     this.api.delete("accommodations", Number(this.selectedAccommodation.id)).then(res=>{
         if(res.status===400){
           this.message.show('danger', 'Hiba',  `${res.message}`)
@@ -165,6 +180,7 @@ search() {
           this.getAccommodations();
         }
     })
+
   }
   //ADDNEW
   
@@ -182,8 +198,6 @@ search() {
       this.newAccommodation.imagePath =  `/uploads/${res.data.filename}`;
      
     }
-    
-    console.log(this.newAccommodation.imagePath )
     this.api.insert("accommodations/accommodation_admin", this.newAccommodation)
       .then(res => {
         if(res.status===400){

@@ -74,7 +74,7 @@ router.get("/accommodation_guest", (req, res)=>{
 //Home szállások megjelenítése
 router.get("/home", (req, res)=>{
     
-    query(`SELECT * FROM accommodation_admin ORDER BY capacity DESC LIMIT 3` ,[], (error, results) =>{
+    query(`SELECT * FROM accommodation_guest ORDER BY capacity DESC LIMIT 3` ,[], (error, results) =>{
         if(error) return res.status(500).send({ errno: error.errno, msg: "Hiba fordult elő"}) ;
       
         res.status(200).json(results)

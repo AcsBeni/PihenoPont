@@ -15,19 +15,29 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     animation: fadeIn 0.5s ease;
 }
-
+@media (max-width: 993px) {
+    
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .bookinglist-container {
         padding: 25px 15px;
-       
+       input[type="date"] {
+       width: 90%;
+    
+}
+
 
     }
 
     .row {
         flex-direction: column;
     }
+    .selectek {
+        flex-direction: column;
+    }
 }
+
 
 
 /* Fade-in animation */

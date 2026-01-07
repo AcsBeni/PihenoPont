@@ -55,59 +55,61 @@ router.post("/:id", upload.single('image'), (req, res) => {
     return res.status(400).json({ error: "Nincs fájl feltöltve!" });
   }
 
-  const imagePath = `/uploads/${req.file.filename}`;
+  const newImagePath = `/uploads/${req.file.filename}`;
 
   query(
-    'SELECT * FROM accommodation_images WHERE accommodationId = ?',
+    'SELECT imagePath FROM accommodation_images WHERE accommodationId = ?',
     [accommodationId],
     (error, results) => {
       if (error) {
         console.error(error);
         return res.status(500).json({ error: "Database error" });
       }
-
-      if (results.length > 0) {
-        query(
-          'UPDATE accommodation_images SET imagePath = ? WHERE accommodationId = ?',
-          [imagePath, accommodationId],
-          (error) => {
-            if (error) {
-              console.error(error);
-              return res.status(500).json({
-                msg: "Hiba fordult elő az adatbázis frissítéskor"
-              });
-            }
-
-            return res.status(200).json({
-              message: "Kép sikeresen frissítve",
-              imagePath,
-              filename: req.file.filename
-            });
-          }
+      if (results.length > 0 && results[0].imagePath) {
+        const oldImagePath = path.join(
+          __dirname,
+          '..',
+          results[0].imagePath
         );
-      }
-      else {
-        query(
-          'INSERT INTO accommodation_images (accommodationId, imagePath) VALUES (?, ?)',
-          [accommodationId, imagePath],
-          (error) => {
-            if (error) {
-              console.error(error);
-              return res.status(500).json({
-                msg: "Hiba fordult elő az adatbázis mentéskor"
-              });
-            }
 
-            return res.status(200).json({
-              message: "Kép sikeresen feltöltve",
-              imagePath,
-              filename: req.file.filename
-            });
-          }
-        );
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlink(oldImagePath, (err) => {
+            if (err) {
+              console.error("Hiba a régi kép törlésekor:", err);
+            }
+          });
+        }
       }
+
+      const sql =
+        results.length > 0
+          ? 'UPDATE accommodation_images SET imagePath = ? WHERE accommodationId = ?'
+          : 'INSERT INTO accommodation_images (accommodationId, imagePath) VALUES (?, ?)';
+
+      const params =
+        results.length > 0
+          ? [newImagePath, accommodationId]
+          : [accommodationId, newImagePath];
+
+      query(sql, params, (error) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({
+            msg: "Hiba az adatbázis mentésekor"
+          });
+        }
+
+        res.status(200).json({
+          message: results.length > 0
+            ? "Kép sikeresen frissítve"
+            : "Kép sikeresen feltöltve",
+          imagePath: newImagePath,
+          filename: req.file.filename
+        });
+      });
     }
   );
 });
+
 
 module.exports = router;

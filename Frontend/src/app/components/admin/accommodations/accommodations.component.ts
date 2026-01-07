@@ -20,7 +20,7 @@ export class AccommodationsComponent {
 search() {
   const text = this.searchText.toLowerCase();
   
-  this.accommodations = this.accommodations.filter(acc =>
+  this.accommodations = this.Allaccommodation.filter(acc =>
     acc.name.toLowerCase().includes(text) ||
     acc.address.toLowerCase().includes(text)
   );
@@ -35,8 +35,9 @@ search() {
   }
   searchText=""
   editMode = false;
-  imagePath	:File | null = null;
-
+ 
+  addImageFile?: File | null = null;
+  editImageFile?: File | null = null;
 
   selectedAccommodation:Accommodations={
     id: 0,
@@ -58,6 +59,7 @@ search() {
     imagePath:""
   }
   accommodations:Accommodations[]=[];
+  Allaccommodation:Accommodations[]=[]
   accommodation:Accommodations={
     id: 0,
     name: '',
@@ -76,7 +78,8 @@ ngOnInit(): void {
 
 getAccommodations() {
   this.api.selectAll('accommodations/accommodation_admin').then(res => {
-    this.accommodations = res.data;
+    this.Allaccommodation = res.data;
+    this.accommodations = res.data
     console.log(res.data)
   });
 }
@@ -107,13 +110,13 @@ openAddModal() {
     const formData = new FormData();
     formData.append('image', this.imagePath);
 
-    const res = await this.api.imgUpload("upload",Number(this.selectedAccommodation.id),formData);
+    const res = await this.api.imgUpdate("upload",Number(this.selectedAccommodation.id),formData);
     if (res.status !== 200) {
       this.message.show('danger', 'Hiba', res.message!);
       return;
     }
   }
-
+  
   this.api.update("accommodations",Number(this.selectedAccommodation.id),this.selectedAccommodation).then((res: Resp) => {
     if (res.status === 400) {
       this.message.show('danger', 'Hiba', res.message!);
@@ -150,33 +153,56 @@ openAddModal() {
         }
     })
   }
-  //ADDNEW
-  
-  async addNewAccommodation() {
-    
-    if (this.imagePath) {
+  // AddNew
+async addNewAccommodation() {
+  if (this.addImageFile) {
     const formData = new FormData();
-    formData.append('image', this.imagePath);
+    formData.append('image', this.addImageFile);
 
-    const res = await this.api.imgUpload("upload",Number(this.selectedAccommodation.id),formData);
+    const res = await this.api.imgUpload("upload", formData);
     if (res.status !== 200) {
       this.message.show('danger', 'Hiba', res.message!);
       return;
     }
   }
-    this.api.insert("accommodations/accommodation_admin", this.newAccommodation).then(res=>{
-       if(res.status===400){
-          this.message.show('danger', 'Hiba',  `${res.message}`)
-          return
-        }
-          
-        if(res.status===200){
-          this.message.show('success','Ok', `${res.message}`)
-          this.getAccommodations();
-        }
-    })
+
+  this.api.insert("accommodations/accommodation_admin", this.newAccommodation)
+    .then(res => {
+      if(res.status===400){
+        this.message.show('danger', 'Hiba',  `${res.message}`);
+        return;
+      }
+      if(res.status===200){
+        this.message.show('success','Ok', `${res.message}`);
+        this.getAccommodations();
+      }
+    });
+}
+
+// Edit
+async confirmEdit() {
+  if (this.editImageFile) {
+    const formData = new FormData();
+    formData.append('image', this.editImageFile);
+
+    const res = await this.api.imgUpdate("upload", Number(this.selectedAccommodation.id), formData);
+    if(res.status !== 200) {
+      this.message.show('danger', 'Hiba', res.message!);
+      return;
+    }
   }
 
+  this.api.update("accommodations", Number(this.selectedAccommodation.id), this.selectedAccommodation)
+    .then((res: Resp) => {
+      if (res.status === 400) {
+        this.message.show('danger', 'Hiba', res.message!);
+        return;
+      }
+      if (res.status === 200) {
+        this.message.show('success', 'Ok', res.message!);
+        this.getAccommodations();
+      }
+    });
+}
 
- 
 }

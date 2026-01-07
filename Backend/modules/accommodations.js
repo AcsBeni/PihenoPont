@@ -32,13 +32,14 @@ router.post("/accommodation_admin", (req, res) => {
         });
       }
       const accommodationId = result.insertId;
+      
       if (!imagePath) {
         return res.status(200).json({
           message: "Szállás sikeresen létrehozva",
           accommodationId
         });
       }
-      console.log(accommodationId)
+      
       // Kép hozzáadása
       query(
         `INSERT INTO accommodation_images (accommodationId, imagePath)
@@ -71,7 +72,15 @@ router.get("/accommodation_guest", (req, res)=>{
         res.status(200).json(results)
     },req);
 })
-
+//Home szállások megjelenítése
+router.get("/home", (req, res)=>{
+    
+    query(`SELECT * FROM accommodation_admin ORDER BY capacity DESC LIMIT 3` ,[], (error, results) =>{
+        if(error) return res.status(500).send({ errno: error.errno, msg: "Hiba fordult elő"}) ;
+      
+        res.status(200).json(results)
+    },req);
+})
 //szállások lehívása
 router.get("/", (req, res)=>{
     

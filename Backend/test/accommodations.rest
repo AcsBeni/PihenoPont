@@ -14,6 +14,12 @@ Content-Type: application/json
 GET {{url}}/accommodations/5
 Content-Type: application/json
 
+### Get 3 featured
+
+GET {{url}}/accommodations/home
+Content-Type: application/json
+
+
 
 ### Get all accommodations view
 

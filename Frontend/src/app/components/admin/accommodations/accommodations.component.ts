@@ -75,7 +75,7 @@ ngOnInit(): void {
 
 
 getAccommodations() {
-  this.api.selectAll('accommodations/accommodationfull').then(res => {
+  this.api.selectAll('accommodations/accommodation_admin').then(res => {
     this.accommodations = res.data;
     console.log(res.data)
   });
@@ -164,7 +164,7 @@ openAddModal() {
       return;
     }
   }
-    this.api.insert("accommodations/accommodationfull", this.newAccommodation).then(res=>{
+    this.api.insert("accommodations/accommodation_admin", this.newAccommodation).then(res=>{
        if(res.status===400){
           this.message.show('danger', 'Hiba',  `${res.message}`)
           return

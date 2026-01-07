@@ -3,17 +3,19 @@ const router = express.Router();
 const {query} = require('../utils/database');
 
 
-//szállások view lehívása
-router.get("/accommodationfull", (req, res)=>{
+
+
+//szállások admin view lehívása
+router.get("/accommodation_admin", (req, res)=>{
     
-    query(`SELECT * FROM accommodationfull` ,[], (error, results) =>{
+    query(`SELECT * FROM accommodation_admin` ,[], (error, results) =>{
         if(error) return res.status(500).send({ errno: error.errno, msg: "Hiba fordult elő"}) ;
       
         res.status(200).json(results)
     },req);
 })
 //Teljes Szállás hozzáadása
-router.post("/accommodationfull", (req, res) => {
+router.post("/accommodation_admin", (req, res) => {
   const { name, description, address, capacity, basePrice, active, imagePath } = req.body;
 
    query(
@@ -60,6 +62,16 @@ router.post("/accommodationfull", (req, res) => {
     }
   );
 });
+//szállások view lehívása
+router.get("/accommodation_guest", (req, res)=>{
+    
+    query(`SELECT * FROM accommodation_guest` ,[], (error, results) =>{
+        if(error) return res.status(500).send({ errno: error.errno, msg: "Hiba fordult elő"}) ;
+      
+        res.status(200).json(results)
+    },req);
+})
+
 //szállások lehívása
 router.get("/", (req, res)=>{
     

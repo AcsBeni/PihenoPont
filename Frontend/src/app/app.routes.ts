@@ -15,12 +15,14 @@ import { NavbarComponent } from './components/system/navbar/navbar.component';
 import { NotfoundComponent } from './components/system/notfound/notfound.component';
 import { MainComponent } from './components/guest/main/main.component';
 import { CalendarComponent } from './components/guest/calendar/calendar.component';
+import { UserlistComponent } from './components/admin/userlist/userlist.component';
 
 export const routes: Routes = [
 
     //ADMIN
     {path: 'accommodations', component:AccommodationsComponent},
     {path: 'bookings', component:BookingsComponent},
+    {path: 'userlist', component:UserlistComponent},
 
     //USER
     {path: 'login', component:LoginComponent},

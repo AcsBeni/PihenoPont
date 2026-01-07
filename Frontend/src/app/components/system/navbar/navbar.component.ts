@@ -50,6 +50,7 @@ export class NavbarComponent {
                   
                   { name: 'Bookings', url: 'bookings', icon: 'bi-journal-plus'},
                   { name: 'Accommodations', url: 'accommodations', icon: ' bi-house-add' },
+                  { name: 'Userlist', url: 'userlist', icon: ' bi-person-lines-fill' },
                 ]
               : []),
             { name: 'Profile', url: 'profile', icon: 'bi-person-circle' },

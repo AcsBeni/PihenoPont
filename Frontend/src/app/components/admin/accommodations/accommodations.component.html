@@ -18,7 +18,7 @@
 
     <div class="acc-card" *ngFor="let acc of accommodations">
 
-      <img *ngIf="acc.imagePath" src="{{serverUrl}}{{acc.imagePath}}" alt="{{acc.name}}" class="thumbnail">
+      <img *ngIf="acc.imagePath" src="{{serverUrl}}{{acc.imagePath}}" alt="{{acc.name}}" class="thumbnail" (click)="openLightbox(acc.imagePath)">
 
       <div class="acc-content">
         <h3>{{ acc.name }}</h3>
@@ -236,3 +236,8 @@
     </div>
   </div>
 </div>
+<app-lightbox
+  [imageUrl]="lightboxImage"
+  [visible]="lightboxVisible"
+  (closed)="lightboxVisible = false">
+</app-lightbox>

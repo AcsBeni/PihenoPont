@@ -1,1 +1,6 @@
-<p>lightbox.component works!</p>
+<div class="lightbox-container" *ngIf="visible" (click)="close()">
+  <div class="lightbox-content" (click)="$event.stopPropagation()">
+    <button class="btn btn-close-white" (click)="close()">X</button>
+    <img [src]="imageUrl" alt="Preview" class="lightbox-image">
+  </div>
+</div>

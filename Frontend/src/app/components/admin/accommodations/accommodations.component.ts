@@ -8,10 +8,11 @@ import { MessageService } from '../../../services/message.service';
 import { Resp } from '../../../interfaces/apiresponse';
 import { enviroment } from '../../../enviroment/enviroment';
 import { Router } from '@angular/router';
+import { LightboxComponent } from '../../system/lightbox/lightbox.component';
 
 @Component({
   selector: 'app-accommodations',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LightboxComponent],
   templateUrl: './accommodations.component.html',
   styleUrl: './accommodations.component.scss',
 })
@@ -29,6 +30,8 @@ export class AccommodationsComponent {
   }
   searchText=""
   editMode = false;
+  lightboxVisible = false;
+  lightboxImage = '';
 
   IsAdmin =false
       
@@ -218,5 +221,10 @@ search() {
           }
         }
     });
+  }
+  //Lightbox
+  openLightbox(image: string){
+    this.lightboxImage = this.serverUrl + image;
+    this.lightboxVisible = true;
   }
 }

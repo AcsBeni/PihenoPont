@@ -5,17 +5,20 @@ import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { Accommodations } from '../../../interfaces/accommodation';
 import { enviroment } from '../../../enviroment/enviroment';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { LightboxComponent } from '../../system/lightbox/lightbox.component';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, LightboxComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
 export class MainComponent {
 
   serverUrl = enviroment.serverUrl
+
+  
   
   constructor(
       private router:Router,
@@ -30,6 +33,9 @@ export class MainComponent {
   guests: number = 1;
   featuredPlaces:Accommodations[]=[]
   
+  lightboxVisible = false;
+  lightboxImage = '';
+
   ngOnInit(): void {
     this.getAccommodations();
   }
@@ -49,5 +55,10 @@ export class MainComponent {
   search() {
     // Implement search logic here
     console.log('Searching for:', this.searchQuery, this.checkInDate, this.checkOutDate, this.guests);
+  }
+    //Lightbox
+  openLightbox(image: string){
+    this.lightboxImage = this.serverUrl + image;
+    this.lightboxVisible = true;
   }
 }

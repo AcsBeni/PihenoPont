@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { Booking } from '../../../interfaces/booking';
 import { Resp } from '../../../interfaces/apiresponse';
 import { Accommodations } from '../../../interfaces/accommodation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bookings.component',
@@ -22,9 +23,10 @@ currency = enviroment.currency;
 
   
     constructor(
+      private router:Router,
       private api: ApiService,
       private message: MessageService,
-      private authService: AuthService
+      private auth: AuthService
     ) {}
 
     loggeduser:Users={
@@ -55,23 +57,28 @@ currency = enviroment.currency;
     formModal: any;
     editMode=false
 
+    IsAdmin=false
+
     accommodations:Accommodations[]=[]
     bookings:Booking[]=[]
 
     activeTab: string = 'userinfo';
 
    ngOnInit(): void {
+    this.IsAdmin = this.auth.isAdmin()
+    if(!this.IsAdmin){
+      this.router.navigate(['/main']);
+      return
+    }
       this.getLoggedUser();
       this.getBookings();
       this.getAccommodations();
       
+      
     }
   getAccommodations(){
     this.api.selectAll('accommodations').then((res) => {
-      console.log(res.data)
       this.accommodations = res.data;
-     
-      
     });
   }
   updateAccommodationId(selectedname: string) {
@@ -81,7 +88,6 @@ currency = enviroment.currency;
 
   getBookings() {
     this.api.selectAll('bookings/fulldata').then((res) => {
-      console.log(res.data)
       this.bookings = res.data;
       this.totalPages = Math.ceil(this.bookings.length / this.pageSize);
       this.setPage(1)
@@ -90,7 +96,7 @@ currency = enviroment.currency;
   }
 
   getLoggedUser() {
-    this.loggeduser = this.authService.loggedUser();
+    this.loggeduser = this.auth.loggedUser();
     
   }
  setPage(page:number){

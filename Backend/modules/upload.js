@@ -110,6 +110,35 @@ router.post("/:id", upload.single('image'), (req, res) => {
     }
   );
 });
+// accommodations.js (vagy ahogy hívjátok)
+router.delete('/:id', async (req, res) => {
+  const accommodationId = Number(req.params.id);
+
+  try {
+    query(
+      'SELECT imagePath FROM accommodation_images WHERE accommodationId = ?',
+      [accommodationId],
+      (err, results) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ msg: "Hiba az adatbázis lekérdezésénél" });
+        }
+        if (results.length > 0 && results[0].imagePath) {
+          const filePath = path.join(__dirname, '..', results[0].imagePath);
+          if (fs.existsSync(filePath)) {
+            fs.unlink(filePath, (err) => {
+              if (err) console.error("Hiba a kép törlésekor:", err);
+            });
+          }
+        }
+        
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Váratlan hiba" });
+  }
+});
 
 
 module.exports = router;

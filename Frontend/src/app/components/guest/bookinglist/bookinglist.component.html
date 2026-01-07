@@ -7,10 +7,11 @@
         <!-- Left column: Email & Name -->
         <div class="col-md-6 mb-4">
             <div class="form-floating mb-3">
+                <h6>Email address</h6>
                 <input type="email" class="form-control" id="Emailfield" [(ngModel)]="User.email" #emailModel="ngModel"
                 required
                 email >
-                <label for="Emailfield">Email address</label>
+                
                 <small class="text-danger" 
                 *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
                     Kérem írjon be egy helyes emailt
@@ -19,32 +20,63 @@
             </div>
 
             <div class="form-floating mb-3">
+                <h6>Name</h6>
                 <input type="text" class="form-control" id="Namefield" [(ngModel)]="User.name">
-                <label for="Namefield">Név</label>
+                
             </div>
 
-            <button [disabled]="!emailRegExp.test(emailModel.value)" type="submit" class="btn btn-primary w-100" >Adatmódosítás</button>
+            <button [disabled]="!emailRegExp.test(emailModel.value)" type="submit" class="btn btn-primary w-100" >Save data</button>
         </div>
 
-        <!-- Right column: Password change -->
+        <!-- Right column -->
         <div class="booking-box">
-    <div class="date-group">
-        <div>
-            <label for="checkin">Érkezés</label>
-            <input type="date" id="checkin">
+    <div class="date-group " >
+        <div  class="mb-3" >
+            <label for="checkin"><h6>Arrival</h6></label>
+            <input type="date" id="checkin" style="height: 58px; width: 31vw;">
         </div>
 
-        <div>
-            <label for="checkout">Távozás</label>
-            <input type="date" id="checkout">
+        <div class="mb-3" >
+            <label for="checkout"><h6>Leaving</h6></label>
+            <input type="date" id="checkout"style="height: 58px; width: 31vw;" >
         </div>
     </div>
 
-    <button onclick="saveDates()">Dátumok mentése</button>
+    <button onclick="saveDates()" style=" width: 31vw;">Save dates</button>
 
     <div class="result" id="result"></div>
+
 </div>
 
+<!-- Select section-->
+<div class="selectek">
+     <div class="col-md-6 mb-4">
+        <h6 style="margin-bottom: 35px;">Select your desired accomodation</h6>
+        <select class="form-select mb-3" aria-label="Default select example" style="height: 55px;border-radius: 10px !important;
+         border: 2px solid #e1e1e1;
+            transition: 0.25s;
+            width: 31vw;">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <h6>Select how many person would be staying</h6>
+        <label for="quantity">Quantity (between 1 and 20):</label>
+<input type="number" id="quantity" name="quantity" min="1" max="20" style="height: 55px;border-radius: 10px !important; border: 2px solid #e1e1e1;transition: 0.25s;
+           padding-left:10px ;">
+    </div>
+
+</div>
+
+<!-- price estimating thing-->
+ <div>
+    <h5>Estimated price:</h5>
+    <p> Persons staying: <span> 0 </span></p>
+    <p>Accomodation price: <span> 0</span> / per night</p>
+ </div>
   
   
   <button type="submit" class="btn btn-primary">Submit</button>

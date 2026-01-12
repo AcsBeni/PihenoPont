@@ -9,8 +9,7 @@
             <div class="form-floating mb-3">
                 <h6>Email address</h6>
                 <input type="email" class="form-control" id="Emailfield" [(ngModel)]="User.email" #emailModel="ngModel"
-                required
-                email >
+                required >
                 
                 <small class="text-danger" 
                 *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
@@ -25,7 +24,7 @@
                 
             </div>
 
-            <button [disabled]="!emailRegExp.test(emailModel.value)" type="submit" class="btn btn-primary w-100" >Save data</button>
+            <button [disabled]="!emailRegExp.test(emailModel.value)" type="button" class="btn btn-primary w-100" >Save data</button>
         </div>
 
         <!-- Right column -->
@@ -33,40 +32,34 @@
     <div class="date-group " >
         <div  class="mb-3" >
             <label for="checkin"><h6>Arrival</h6></label>
-            <input type="date" id="checkin" style="height: 58px; ">
+            <input type="date" id="checkin" style="height: 58px; " [(ngModel)]="startDate" (change)="calculatePrice()">
         </div>
 
         <div class="mb-3" >
             <label for="checkout"><h6>Leaving</h6></label>
-            <input type="date" id="checkout"style="height: 58px;" >
+            <input type="date" id="checkout" style="height: 58px;" [(ngModel)]="endDate" (change)="calculatePrice()">
         </div>
     </div>
-
-    <button onclick="saveDates()">Save dates</button>
-
-    <div class="result" id="result"></div>
 
 </div>
 
 <!-- Select section-->
 <div class="selectek">
      <div class="col-md-6 mb-4" style="margin-right: 5px;">
-        <h6 style="margin-bottom: 35px;">Select your desired accomodation</h6>
+        <h6 style="margin-bottom: 35px;">Select your desired accommodation</h6>
         <select class="form-select mb-3" aria-label="Default select example" style="height: 55px;border-radius: 10px !important;
          border: 2px solid #e1e1e1;
             transition: 0.25s;
-            width: 95%; ">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+            width: 95%; " [(ngModel)]="selectedAccommodationId" (change)="calculatePrice()">
+        <option value="0" selected>Select accommodation</option>
+        <option *ngFor="let acc of accommodations" [value]="acc.id">{{acc.name}} - {{acc.basePrice}} {{currency}}/night</option>
         </select>
     </div>
     <div class="mb-3">
         <h6>Select how many person would be staying</h6>
         <label for="quantity" style="font-size: smaller;">Quantity (between 1 and 20):</label>
 <input type="number" id="quantity" name="quantity" min="1" max="20" style="height: 55px;border-radius: 10px !important; border: 2px solid #e1e1e1;transition: 0.25s;
-           padding-left:10px ;">
+           padding-left:10px ;" [(ngModel)]="persons" (change)="calculatePrice()">
     </div>
 
 </div>
@@ -75,40 +68,12 @@
  <div>
     <h3>Estimated price:</h3>
     <hr>
-    <p> Persons staying: <span> 0 </span></p>
-    <p>Accomodation price: <span> 0</span> / per night</p>
+    <p> Persons staying: <span>{{persons}}</span></p>
+    <p>Accommodation price: <span>{{ getSelectedAccommodationPrice() }}</span> {{currency}} / per night</p>
     <hr>
-    <p style="font-size: larger;"> <b>Final price: <span> 0</span> $ </b> </p>
+    <p style="font-size: larger;"> <b>Final price: <span>{{totalPrice}}</span> {{currency}} </b> </p>
  </div>
   
   
-  <button type="submit" class="btn btn-primary">Submit</button>
-
-
-
-
-
-<script>
-function saveDates() {
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-
-    if (!checkin || !checkout) {
-        alert("Válaszd ki mindkét dátumot!");
-        return;
-    }
-
-    if (checkout <= checkin) {
-        alert("A távozás dátuma későbbi kell legyen!");
-        return;
-    }
-
-    // Itt tudod később felhasználni
-    console.log("Érkezés:", checkin);
-    console.log("Távozás:", checkout);
-
-    document.getElementById("result").innerHTML =
-        `Érkezés: <strong>${checkin}</strong><br>
-         Távozás: <strong>${checkout}</strong>`;
-}
-</script>
+  <button type="button" class="btn btn-primary" (click)="submitBooking()">Submit</button>
+</div>

@@ -33,28 +33,8 @@ currency = enviroment.currency;
       password: '',
       role: 'user'
     }
-    user: Users={
-      name: '',
-      email: '',
-      password: '',
-      role: 'user'
-    }
-
-    currentpage=1
-    pageSize=5
-    totalPages=1
-    pagedBooking:Booking[]=[]
-    selectedBooking:Booking={
-      userId: 0,
-      accommodationId: 0,
-      persons: 0,
-      totalPrice: 0,
-      status: 'pending',
-      accommodation: ''
-    }
 
   // Ellenőrzések
-  passwdRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
   emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
   //User model
@@ -65,101 +45,96 @@ currency = enviroment.currency;
   role:"user"
 }
 
-    formModal: any;
-    editMode=false
+  // Booking form fields
+  selectedAccommodationId: string = '0';
+  startDate: string = '';
+  endDate: string = '';
+  persons: number = 1;
+  totalPrice: number = 0;
+
 
     accommodations:Accommodations[]=[]
-    bookings:Booking[]=[]
-
-    activeTab: string = 'userinfo';
 
     ngOnInit(): void {
       this.getLoggedUser();
-      this.getBookings();
-      this.getAccommodations();
-      
+      this.User = this.loggeduser;
+      this.loadAccommodations();
     }
-  getAccommodations(){
-    this.api.selectAll('accommodations').then((res) => {
-      console.log(res.data)
-      this.accommodations = res.data;
-     
-      
-    });
-  }
-
-  updateAccommodationId(selectedname: string) {
-  this.selectedBooking.accommodationId = Number(this.accommodations.find(acc => acc.name === selectedname)?.id || null);
-}
   
 
-  getBookings() {
-    this.api.selectAll('bookings/fulldata').then((res) => {
-      console.log(res.data)
-      this.bookings = res.data;
-      this.totalPages = Math.ceil(this.bookings.length / this.pageSize);
-      this.setPage(1)
-      
-    });
-  }
 
   getLoggedUser() {
     this.loggeduser = this.authService.loggedUser();
     
   }
- setPage(page:number){
-      this.currentpage =page;
-      const startIndex= (page-1) * this.pageSize;
-      const endIndex= startIndex + this.pageSize;
-      this.pagedBooking = this.bookings.slice(startIndex, endIndex)
+
+  async loadAccommodations() {
+    const resp: Resp = await this.api.selectAll('accommodations');
+    if (resp.status === 200) {
+      this.accommodations = resp.data;
+    } else {
+      this.message.show('danger', 'HIBA', 'Hiba a szállások betöltésekor');
+    }
   }
 
-  editBooking(id: number) {
-    const booking = this.bookings.find(b => b.id === id);
+  calculatePrice() {
+    const selectedAcc = this.accommodations.find(acc => acc.id === +this.selectedAccommodationId);
+    if (selectedAcc && this.startDate && this.endDate) {
+      const start = new Date(this.startDate);
+      const end = new Date(this.endDate);
+      if (end <= start) {
+        this.totalPrice = 0;
+        return;
+      }
+      const nights = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+      this.totalPrice = selectedAcc.basePrice * nights * this.persons;
+    } else {
+      this.totalPrice = 0;
+    }
+  }
 
-    if (!booking) {
-      this.message.show('warning', 'Error', 'Booking not found!');
+  async submitBooking() {
+    if (!this.User.email || !this.emailRegExp.test(this.User.email) || !this.User.name || !this.startDate || !this.endDate || !this.selectedAccommodationId || this.persons < 1) {
+      this.message.show('danger', 'HIBA', 'Kérjük, töltse ki helyesen az összes mezőt!');
       return;
     }
-    this.selectedBooking = { ...booking };
-    this.updateAccommodationId(this.selectedBooking.accommodation);
-  }
 
-  confirmEdit() {
-    this.api.update("bookings", Number(this.selectedBooking.id), this.selectedBooking).then((res:Resp)=>{
-        if(res.status===400){
-          this.message.show('danger', 'Hiba',  `${res.message}`)
-          return
-        }
-          
-        if(res.status===200){
-          this.message.show('success','Ok', `${res.message}`)
-            this.getBookings();
-        }
-      })
-      
-  }
-    
-  setDeleteId(id: number) {
-    const idx = this.bookings.findIndex(u => u.id === id);
-    if (idx !== -1) {
-      this.selectedBooking = this.bookings[idx];
-    } else {
-      this.message.show('warning', 'Hiba', 'A felhasználó nem található!');
+    const selectedAcc = this.accommodations.find(acc => acc.id === +this.selectedAccommodationId);
+    if (!selectedAcc) {
+      this.message.show('danger','HIBA','Érvénytelen szállás kiválasztva!');
+      return;
+    }
+
+    const bookingData: Booking = {
+      userId: this.loggeduser.id || 0, // assuming loggeduser has id
+      accommodationId: +this.selectedAccommodationId,
+      startDate: new Date(this.startDate),
+      endDate: new Date(this.endDate),
+      persons: this.persons,
+      totalPrice: this.totalPrice,
+      status: 'pending',
+      accommodation: selectedAcc.name,
+      email: this.User.email
     };
-  }
 
-  confirmDelete() {
-    this.api.delete("bookings", Number(this.selectedBooking.id)).then(res=>{
-        if(res.status===400){
-          this.message.show('danger', 'Hiba',  `${res.message}`)
-          return
-        }
-          
-        if(res.status===200){
-          this.message.show('success','Ok', `${res.message}`)
-          this.getBookings();
-        }
-    })
+   this.api.insert('bookings', bookingData).then(res => {
+      if (res.status === 200) {
+        this.message.show('success', 'Sikeres foglalás', 'Foglalása sikeresen elküldve!');
+        this.resetForm();
+      } else {
+        this.message.show('danger', 'HIBA', 'Hiba történt a foglalás során. Kérjük, próbálja újra!');
+      }
+    });
+  }
+  getSelectedAccommodationPrice(): number {
+    const selectedAcc = this.accommodations.find(acc => acc.id === +this.selectedAccommodationId);
+    return selectedAcc?.basePrice || 0;
+  }
+  resetForm() {
+    this.selectedAccommodationId = '0';
+    this.startDate = '';
+    this.endDate = '';
+    this.persons = 1;
+    this.totalPrice = 0;
   }
 }

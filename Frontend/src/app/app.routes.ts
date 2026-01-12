@@ -3,7 +3,6 @@ import { AccommodationsComponent } from './components/admin/accommodations/accom
 import { BookingsComponent } from './components/admin/bookings/bookings.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { LogoutComponent } from './components/user/logout/logout.component';
-import { LostpassComponent } from './components/user/lostpass/lostpass.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { BookinglistComponent } from './components/guest/bookinglist/bookinglist.component';
@@ -27,7 +26,6 @@ export const routes: Routes = [
     //USER
     {path: 'login', component:LoginComponent},
     {path: 'logout', component:LogoutComponent},
-    {path: 'lostpass', component:LostpassComponent},
     {path: 'profile', component:ProfileComponent},
     {path: 'registration', component:RegistrationComponent},
     

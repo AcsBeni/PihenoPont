@@ -67,7 +67,7 @@ export class UserlistComponent {
 
   editUser(id: number) {
     if (id === this.loggedUserId) {
-      this.message.show('warning', 'Action denied', "You can't edit yourself!");
+      this.message.show('warning', 'Művelet megtagadva', "Nem szerkesztheted magad!");
       return;
     }
     const user = this.users.find(u => u.id === id);
@@ -93,12 +93,12 @@ export class UserlistComponent {
 
   setDeleteId(id: number) {
     if (id === this.loggedUserId) {
-      this.message.show('warning', 'Action denied', "You can't delete yourself!");
+      this.message.show('warning', 'Művelet megtagadva', "Nem törölheted magad!");
       return;
     }
     const user = this.users.find(u => u.id === id);
     if (!user) {
-      this.message.show('warning', 'Error', 'User not found!');
+      this.message.show('warning', 'Error', 'Felhasználó nem található!');
       return;
     }
     this.selectedUser = user;

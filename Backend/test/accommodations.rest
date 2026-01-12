@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ### Get all accommodations view
 
-GET {{url}}/accommodations/accommodationfull
+GET {{url}}/accommodations/accommodation_guest
 Content-Type: application/json
 
 

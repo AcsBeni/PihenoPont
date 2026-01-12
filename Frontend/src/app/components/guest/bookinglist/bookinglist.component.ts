@@ -9,16 +9,19 @@ import { FormsModule } from '@angular/forms';
 import { Booking } from '../../../interfaces/booking';
 import { Resp } from '../../../interfaces/apiresponse';
 import { Accommodations } from '../../../interfaces/accommodation';
+import { LightboxComponent } from '../../system/lightbox/lightbox.component';
 
 @Component({
   selector: 'app-bookinglist',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, LightboxComponent],
   templateUrl: './bookinglist.component.html',
   styleUrl: './bookinglist.component.scss',
 })
 export class BookinglistComponent {
 currency = enviroment.currency;
-  
+serverUrl = enviroment.serverUrl;
+lightboxVisible = false;
+lightboxImage = ''; 
 
   
     constructor(
@@ -52,7 +55,16 @@ currency = enviroment.currency;
   persons: number = 1;
   totalPrice: number = 0;
 
-
+    selectedAccommodation:Accommodations ={
+      id: 0,
+      name: '',
+      description: '',
+      address: '',
+      capacity: 0,
+      basePrice: 0,
+      imagePath: '',
+      active: false
+    }
     accommodations:Accommodations[]=[]
 
     ngOnInit(): void {
@@ -60,6 +72,10 @@ currency = enviroment.currency;
       this.User = this.loggeduser;
       this.loadAccommodations();
     }
+    onAccommodationChange() {
+  this.selectedAccommodation =
+    this.accommodations.find(acc => acc.id === +this.selectedAccommodationId)!
+}
   
 
 
@@ -69,7 +85,7 @@ currency = enviroment.currency;
   }
 
   async loadAccommodations() {
-    const resp: Resp = await this.api.selectAll('accommodations');
+    const resp: Resp = await this.api.selectAll('accommodations/accommodation_guest');
     if (resp.status === 200) {
       this.accommodations = resp.data;
     } else {
@@ -136,5 +152,10 @@ currency = enviroment.currency;
     this.endDate = '';
     this.persons = 1;
     this.totalPrice = 0;
+  }
+  //Lightbox
+  openLightbox(image: string){
+    this.lightboxImage = this.serverUrl + image;
+    this.lightboxVisible = true;
   }
 }

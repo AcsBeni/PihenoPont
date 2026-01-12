@@ -5,17 +5,8 @@
 
     <!-- Email -->
     <div class="form-floating mb-3">
-        <input 
-            type="email"
-            class="form-control"
-            id="loginEmail"
-            placeholder=""
-            [(ngModel)]="User.email"
-            #emailModel="ngModel"
-            required
-            email
-        >
-        <label for="loginEmail">Email address</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="" [(ngModel)]="User.email" #emailModel="ngModel" requiredemail>
+        <label for="loginEmail">Email cím</label>
 
         <small class="text-danger" 
                *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
@@ -25,33 +16,21 @@
 
     <!-- Password -->
     <div class="form-floating mb-2">
-        <input 
-            type="password"
-            class="form-control"
-            id="loginPassword"
-            placeholder=""
-            [(ngModel)]="User.password">
+        <input type="password" class="form-control" id="loginPassword" placeholder="" [(ngModel)]="User.password">
         <label for="loginPassword">Password</label>
     </div>
 
     <!-- Remember Me -->
     <div class="form-check mt-2">
-        <input 
-            class="form-check-input"
-            type="checkbox"
-            id="checkDefault"
-            [(ngModel)]="rememberMe">
+        <input class="form-check-input" type="checkbox" id="checkDefault" [(ngModel)]="rememberMe">
         <label class="form-check-label">
-            Remember me
+            Emlékezz rám
         </label>
     </div>
 
     <!-- Buttons -->
     <div class="d-flex gap-2 gombm">
-        <button 
-            class="btn btn-primary"
-            [disabled]="emailModel.value && !emailRegExp.test(emailModel.value)"
-            (click)="login()">
+        <button class="btn btn-primary" [disabled]="emailModel.value && !emailRegExp.test(emailModel.value)" (click)="login()">
             Login
         </button>
         

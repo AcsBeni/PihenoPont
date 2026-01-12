@@ -1,17 +1,17 @@
 <div class="accommodation-page">
 
-  <h2 class="page-title">Accommodations</h2>
+  <h2 class="page-title">Szállások</h2>
 
   <div class="search-bar">
     <input 
       type="text" 
-      placeholder="Search accommodations..." 
+      placeholder="Szállások keresése..." 
       [(ngModel)]="searchText"
     >
-    <button (click)="search()">Search</button>
+    <button (click)="search()">Keresés</button>
   </div>
   <button class="add-btn mb-3" data-bs-toggle="modal" data-bs-target="#addAccommodationModal">
-    Add new accommodation
+    Új szállás hozzáadása
   </button>
 
   <div class="accommodation-grid">
@@ -33,12 +33,12 @@
         </p>
 
         <div class="price">
-          From <strong>{{ acc.basePrice }} € / night</strong>
+          From <strong>{{ acc.basePrice }} Ft / éjszaka</strong>
         </div>
 
         <div class="btn-row">
-          <button class="btn edit-btn"  data-bs-toggle="modal" data-bs-target="#editAccommodationModal"  (click)="editAccommodation(acc.id!)">Edit</button>
-          <button class="btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="setDeleteId(acc.id!)">Delete</button>
+          <button class="btn edit-btn"  data-bs-toggle="modal" data-bs-target="#editAccommodationModal"  (click)="editAccommodation(acc.id!)">Szerkesztés</button>
+          <button class="btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="setDeleteId(acc.id!)">Törlés</button>
         </div>
       </div>
 
@@ -55,7 +55,7 @@
     <div class="modal-content edit-modal">
 
       <div class="modal-header">
-        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Add Accommodation</h5>
+        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Szállás hozzáadása</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
@@ -67,7 +67,7 @@
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="text" class="form-control" id="accName" placeholder="Name" [(ngModel)]="newAccommodation.name" name="name" required>
-                <label for="accName">Name</label>
+                <label for="accName">Név</label>
               </div>
             </div>
 
@@ -75,7 +75,7 @@
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="text" class="form-control" id="accAddress" placeholder="Address" [(ngModel)]="newAccommodation.address" name="address" required>
-                <label for="accAddress">Address</label>
+                <label for="accAddress">Cím</label>
               </div>
             </div>
 
@@ -83,19 +83,19 @@
             <div class="col-12">
               <div class="form-floating">
                 <textarea class="form-control" id="accDescription" placeholder="Description" [(ngModel)]="newAccommodation.description" name="description" style="height:100px;" required></textarea>
-                <label for="accDescription">Description</label>
+                <label for="accDescription">Leírás</label>
               </div>
             </div>
             <!--File-->
             <div class="mb-3">
-              <label for="formFile" class="form-label">Default file input example</label>
+              <label for="formFile" class="form-label">Általános fájl bevitel</label>
               <input class="form-control" type="file" id="formFile"(change)="onAddFileSelected($event)">
             </div>
             <!-- Capacity -->
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="number" class="form-control" id="accCapacity" placeholder="Capacity" [(ngModel)]="newAccommodation.capacity" name="capacity" required>
-                <label for="accCapacity">Capacity</label>
+                <label for="accCapacity">Kapacitás</label>
               </div>
             </div>
 
@@ -103,7 +103,7 @@
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="number" class="form-control" id="accPrice" placeholder="Base Price" [(ngModel)]="newAccommodation.basePrice" name="basePrice" required>
-                <label for="accPrice">Base Price (€)</label>
+                <label for="accPrice">Alapár (€)</label>
               </div>
             </div>
 
@@ -113,8 +113,8 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn save-btn"  (click)="addNewAccommodation()" data-bs-dismiss="modal">Add</button>
+        <button class="btn cancel-btn" data-bs-dismiss="modal">Mégse</button>
+        <button class="btn save-btn"  (click)="addNewAccommodation()" data-bs-dismiss="modal">Hozzáadás</button>
       </div>
 
     </div>
@@ -128,7 +128,7 @@
     <div class="modal-content edit-modal">
 
       <div class="modal-header">
-        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Edit Accommodation</h5>
+        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Szállás szerkesztése</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
@@ -140,7 +140,7 @@
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="text" class="form-control" id="accName" placeholder="Name" [(ngModel)]="selectedAccommodation.name" name="name" required>
-                <label for="accName">Name</label>
+                <label for="accName">Név</label>
               </div>
             </div>
 
@@ -148,7 +148,7 @@
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="text" class="form-control" id="accAddress" placeholder="Address" [(ngModel)]="selectedAccommodation.address" name="address" required>
-                <label for="accAddress">Address</label>
+                <label for="accAddress">Cím</label>
               </div>
             </div>
 
@@ -156,19 +156,19 @@
             <div class="col-12">
               <div class="form-floating">
                 <textarea class="form-control" id="accDescription" placeholder="Description" [(ngModel)]="selectedAccommodation.description" name="description" style="height:100px;" required></textarea>
-                <label for="accDescription">Description</label>
+                <label for="accDescription">Leírás</label>
               </div>
             </div>
             <!--File-->
             <div class="mb-3">
-              <label for="formFile" class="form-label">Default file input example</label>
+              <label for="formFile" class="form-label">Általános fájl bevitel</label>
               <input class="form-control" type="file" id="formFile"(change)="onEditFileSelected($event)">
             </div>
             <!-- Capacity -->
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="number" class="form-control" id="accCapacity" placeholder="Capacity" [(ngModel)]="selectedAccommodation.capacity" name="capacity" required>
-                <label for="accCapacity">Capacity</label>
+                <label for="accCapacity">Kapacitás</label>
               </div>
             </div>
 
@@ -176,7 +176,7 @@
             <div class="col-md-6">
               <div class="form-floating">
                 <input type="number" class="form-control" id="accPrice" placeholder="Base Price" [(ngModel)]="selectedAccommodation.basePrice" name="basePrice" required>
-                <label for="accPrice">Base Price (€)</label>
+                <label for="accPrice">Alapár (€)</label>
               </div>
             </div>
 
@@ -184,19 +184,16 @@
             <div class="col-md-6">
               <div class="form-check mt-3">
                 <input class="form-check-input" type="checkbox" id="accActive" [(ngModel)]="selectedAccommodation.active" name="active">
-                <label class="form-check-label" for="accActive">Active</label>
+                <label class="form-check-label" for="accActive">Aktív</label>
               </div>
             </div>
-
-            
           </div>
-
         </form>
       </div>
 
       <div class="modal-footer">
-        <button class="btn cancel-btn" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn save-btn" (click)="confirmEdit()" data-bs-dismiss="modal">Save Changes</button>
+        <button class="btn cancel-btn" data-bs-dismiss="modal">Mégse</button>
+        <button class="btn save-btn" (click)="confirmEdit()" data-bs-dismiss="modal">Változások mentése</button>
       </div>
 
     </div>
@@ -210,26 +207,26 @@
       <div class="modal-header">
         <h5 class="modal-title">
           <i class="bi bi-exclamation-triangle-fill"></i>
-          Confirm Deletion
+          Törlés megerősítése
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
         <p>
-          Are you sure you want to delete this item?
+          Biztosan törölni szeretnéd ezt az elemet?
         </p>
         <p class="warning-text">
-          This action cannot be undone.
+          Ez a művelet nem visszavonható.
         </p>
       </div>
 
       <div class="modal-footer">
         <button class="btn cancel-btn" data-bs-dismiss="modal">
-          Cancel
+          Mégse 
         </button>
         <button class="btn delete-btn" (click)="confirmDelete()" data-bs-dismiss="modal">
-          Delete
+          Törlés
         </button>
       </div>
 

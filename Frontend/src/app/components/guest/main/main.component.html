@@ -4,29 +4,23 @@
 
   <section class="hero-section text-center">
     <div class="hero-content">
-      <h1>Welcome to Pihenőpont</h1>
-      <p>Find your perfect stay — hotels, resorts, and vacation rentals.</p>
+      <h1>Üdvözöllek a Pihenőponton!</h1>
+      <p>Találd meg a tökéletes pihenőt – szállodák, szállások és vakációhelyek.</p>
 
-      <!-- Search bar -->
-      <div class="search-bar">
-        <input type="text" placeholder="Destination or hotel">
-        <input type="date">
-        <input type="date">
-        <button class="btn btn-primary" (click)="search()">Search</button>
-      </div>
+     
     </div>
   </section>
 
   <!-- Featured Destinations -->
   <section class="featured my-5">
-    <h2 class="text-center mb-4">Featured Destinations</h2>
+    <h2 class="text-center mb-4">Kiemelt helyek</h2>
     <div class="featured-grid">
       <div class="card" *ngFor="let place of featuredPlaces">
         <img *ngIf="place.imagePath" src="{{serverUrl}}{{place.imagePath}}" alt="{{place.name}}" class="thumbnail" (click)="openLightbox(place.imagePath)">
         <div class="card-body">
           <h5 class="card-title">{{place.name}}</h5>
           <p class="card-text">{{place.description}}</p>
-          <button class="btn btn-primary" routerLink="/accommodations">View Hotels</button>
+          
         </div>
       </div>
     </div>
@@ -34,8 +28,8 @@
 
   <section class="info-section bg-light py-5">
     <div class="container text-center">
-      <h2>Why Choose Pihenopont?</h2>
-      <p>We provide secure bookings, verified accommodations, and 24/7 support worldwide.</p>
+      <h2>Miért válaszd a Pihenőpontot?</h2>
+      <p>Biztonságos foglalásokat, megbízható szállásokat és 24/7 támogatást nyújtunk világszerte.</p>
       <div class="testimonials">
         <div class="testimonial-card" *ngFor="let testimonial of testimonials">
           <p>"{{testimonial.text}}"</p>
@@ -46,8 +40,8 @@
   </section>
 
   <section class="cta-section text-center py-5">
-    <h2>Ready to book your next stay?</h2>
-    <button class="btn btn-primary btn-lg mt-3" routerLink="/bookinglist">Get Started</button>
+    <h2>Készen állsz a következő szállásodra?</h2>
+    <button class="btn btn-primary btn-lg mt-3" routerLink="/bookinglist">Kezd el</button>
   </section>
 
   <app-lightbox

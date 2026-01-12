@@ -47,13 +47,12 @@ export class MainComponent {
 
 
   testimonials = [
-    { text: 'Great experience, highly recommend!', author: 'Anna K.' },
-    { text: 'Best hotels and service!', author: 'Gabor L.' },
-    { text: 'Easy booking and friendly staff.', author: 'Maria T.' },
+    { text: 'Kiváló szolgáltatás, nagyon ajánlom!', author: 'Anna K.' },
+    { text: 'Legjobb szállodák és szolgáltatás!', author: 'Gabor L.' },
+    { text: 'Könnyű foglalás és barátságos személyzet.', author: 'Maria T.' },
   ];
 
   search() {
-    // Implement search logic here
     console.log('Searching for:', this.searchQuery, this.checkInDate, this.checkOutDate, this.guests);
   }
     //Lightbox

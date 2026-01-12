@@ -1,16 +1,16 @@
 <div class="form-container bookinglist-container">
 
-  <h3 class="text-center mt-3">Bookings</h3>
+  <h3 class="text-center mt-3">Foglalás</h3>
 <hr>
     <div class="row">
 
         <!-- Left column: Email & Name -->
         <div class="col-md-6 mb-4">
             <div class="form-floating mb-3">
-                <h6>Email address</h6>
+                
                 <input type="email" class="form-control" id="Emailfield" [(ngModel)]="User.email" #emailModel="ngModel"
                 required >
-                
+                <label for="Emailfield">Email cím</label>
                 <small class="text-danger" 
                 *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
                     Kérem írjon be egy helyes emailt
@@ -19,61 +19,78 @@
             </div>
 
             <div class="form-floating mb-3">
-                <h6>Name</h6>
+                
                 <input type="text" class="form-control" id="Namefield" [(ngModel)]="User.name">
+                <label for="Namefield">Név</label>
                 
             </div>
 
-            <button [disabled]="!emailRegExp.test(emailModel.value)" type="button" class="btn btn-primary w-100" >Save data</button>
+            <button [disabled]="!emailRegExp.test(emailModel.value)" type="button" class="btn btn-primary w-100" >Adat elmentése</button>
         </div>
 
         <!-- Right column -->
         <div class="booking-box">
-    <div class="date-group " >
-        <div  class="mb-3" >
-            <label for="checkin"><h6>Arrival</h6></label>
-            <input type="date" id="checkin" style="height: 58px; " [(ngModel)]="startDate" (change)="calculatePrice()">
-        </div>
+            <div class="date-group " >
+            <div class="form-floating mb-3">
+                <input type="date" id="checkin" class="form-control" style="height: 58px; " [(ngModel)]="startDate" (change)="calculatePrice()">
+                <label for="checkin">Érkezés</label>
+            </div>
 
-        <div class="mb-3" >
-            <label for="checkout"><h6>Leaving</h6></label>
-            <input type="date" id="checkout" style="height: 58px;" [(ngModel)]="endDate" (change)="calculatePrice()">
+            <div class="form-floating mb-3" >
+                
+                <input type="date" id="checkout" class="form-control" style="height: 58px;" [(ngModel)]="endDate" (change)="calculatePrice()">
+                <label for="checkout">Távozás</label>
+            </div>
         </div>
-    </div>
 
 </div>
 
 <!-- Select section-->
 <div class="selectek">
      <div class="col-md-6 mb-4" style="margin-right: 5px;">
-        <h6 style="margin-bottom: 35px;">Select your desired accommodation</h6>
+        <h6 style="margin-bottom: 35px;">Válaszd ki a kívánt szállást</h6>
         <select class="form-select mb-3" aria-label="Default select example" style="height: 55px;border-radius: 10px !important;
          border: 2px solid #e1e1e1;
             transition: 0.25s;
-            width: 95%; " [(ngModel)]="selectedAccommodationId" (change)="calculatePrice()">
-        <option value="0" selected>Select accommodation</option>
-        <option *ngFor="let acc of accommodations" [value]="acc.id">{{acc.name}} - {{acc.basePrice}} {{currency}}/night</option>
+            width: 95%; " [(ngModel)]="selectedAccommodationId" (change)="onAccommodationChange(); calculatePrice()">
+        <option value="0" selected>Szállás kiválasztása</option>
+        <option *ngFor="let acc of accommodations" [value]="acc.id">{{acc.name}} - {{acc.basePrice}} {{currency}}/éjszaka</option>
         </select>
     </div>
     <div class="mb-3">
-        <h6>Select how many person would be staying</h6>
-        <label for="quantity" style="font-size: smaller;">Quantity (between 1 and 20):</label>
+        <h6>Hány személy fogja használni a szállást?</h6>
+        <label for="quantity" style="font-size: smaller;">Mennyi személy fogja használni a szállást (1 és 20 között):</label>
 <input type="number" id="quantity" name="quantity" min="1" max="20" style="height: 55px;border-radius: 10px !important; border: 2px solid #e1e1e1;transition: 0.25s;
            padding-left:10px ;" [(ngModel)]="persons" (change)="calculatePrice()">
     </div>
 
 </div>
+<img
+  *ngIf="selectedAccommodation?.imagePath"
+  [src]="serverUrl + selectedAccommodation.imagePath"
+  alt="Szállás képe"
+    class="accommodation-image mt-3 mb-3"
+(click)="openLightbox(selectedAccommodation.imagePath!)" 
+  style="cursor: pointer;"  
+/>
+
 
 <!-- price estimating thing-->
  <div>
-    <h3>Estimated price:</h3>
+    <h3>Becsült ár:</h3>
     <hr>
-    <p> Persons staying: <span>{{persons}}</span></p>
-    <p>Accommodation price: <span>{{ getSelectedAccommodationPrice() }}</span> {{currency}} / per night</p>
+    <p> Személyek száma: <span>{{persons}}</span></p>
+    <p>Szállás ára: <span>{{ getSelectedAccommodationPrice() }}</span> {{currency}} / éjszaka</p>
     <hr>
     <p style="font-size: larger;"> <b>Final price: <span>{{totalPrice}}</span> {{currency}} </b> </p>
  </div>
-  
-  
-  <button type="button" class="btn btn-primary" (click)="submitBooking()">Submit</button>
+
+
+  <button type="button" class="btn btn-primary" (click)="submitBooking()">Foglalás</button>
 </div>
+
+<app-lightbox
+  [imageUrl]="lightboxImage"
+  [visible]="lightboxVisible"
+  (closed)="lightboxVisible = false">
+</app-lightbox>

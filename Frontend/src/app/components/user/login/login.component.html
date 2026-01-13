@@ -17,7 +17,7 @@
     <!-- Password -->
     <div class="form-floating mb-2">
         <input type="password" class="form-control" id="loginPassword" placeholder="" [(ngModel)]="User.password">
-        <label for="loginPassword">Password</label>
+        <label for="loginPassword">Jelszó</label>
     </div>
 
     <!-- Remember Me -->
@@ -31,11 +31,11 @@
     <!-- Buttons -->
     <div class="d-flex gap-2 gombm">
         <button class="btn btn-primary" [disabled]="emailModel.value && !emailRegExp.test(emailModel.value)" (click)="login()">
-            Login
+            Bejelentkezés
         </button>
         
         <button class="btn btn-secondary" routerLink="/registration">
-             Registration
+             Regisztráció
         </button>
         
     </div>

@@ -1,6 +1,6 @@
 <div class="form-container">
 
-    <h3>Registration</h3>
+    <h3>Regisztráció</h3>
     <hr>
 
     <!-- Email -->
@@ -16,7 +16,7 @@
             required
             email
         >
-        <label for="floatingInput">Email address</label>
+        <label for="floatingInput">Email cím</label>
 
         <small class="text-danger" 
                *ngIf="emailModel.value && !emailRegExp.test(emailModel.value)">
@@ -32,7 +32,7 @@
             id="nameinput"
             placeholder=""
             [(ngModel)]="NewUser.name">
-        <label for="nameinput">Name</label>
+        <label for="nameinput">Név</label>
     </div>
 
     <!-- Password -->
@@ -45,7 +45,7 @@
             [(ngModel)]="NewUser.password"
             #password="ngModel"
             required>
-        <label for="floatingPassword">Password</label>
+        <label for="floatingPassword">Jelszó</label>
 
         <small class="text-danger"
            *ngIf="password.value && !passwdRegExp.test(password.value)">
@@ -63,7 +63,7 @@
             [(ngModel)]="confirmpassword"
             #confpass="ngModel"
             required>
-        <label for="confirmPassword">Confirm Password</label>
+        <label for="confirmPassword">Jelszó mégegyszer</label>
         <small class="text-danger"
                 *ngIf="password.value != confpass.value">
                     A jelszónak kettő jelszónak meg kell egyeznie!
@@ -78,11 +78,11 @@
              !passwdRegExp.test(password.value) || 
              password.value != confpass.value"
             (click)="register()">
-            Registration
+            Regisztrálás
         </button>
         
         <button class="btn btn-secondary" routerLink="/login">
-            Login
+            Bejelentkezés
         </button>
        
        

@@ -54,7 +54,11 @@
             transition: 0.25s;
             width: 95%; " [(ngModel)]="selectedAccommodationId" (change)="onAccommodationChange(); calculatePrice()">
         <option value="0" selected>Szállás kiválasztása</option>
-        <option *ngFor="let acc of accommodations" [value]="acc.id">{{acc.name}} - {{acc.basePrice}} {{currency}}/éjszaka</option>
+        <ng-container *ngFor="let acc of accommodations">
+        <option *ngIf="acc.active" [value]="acc.id">
+            {{ acc.name }} - {{ acc.basePrice }} {{ currency }}/éjszaka
+        </option>
+        </ng-container>
         </select>
     </div>
     <div class="mb-3">

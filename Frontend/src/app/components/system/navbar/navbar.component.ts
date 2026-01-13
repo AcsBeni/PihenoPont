@@ -41,14 +41,14 @@ export class NavbarComponent {
     
     this.navItems = [
       { name: 'Foglalás', url: 'bookinglist', icon: 'bi-journal-text' },
-    
+      { name: 'Szállások', url: 'accommodations', icon: ' bi-house-add' },
       ...(Isloggedin
         ? [
             ...(this.isAdmin
               ? [
                   
                   { name: 'Foglalások', url: 'bookings', icon: 'bi-journal-plus'},
-                  { name: 'Szállások', url: 'accommodations', icon: ' bi-house-add' },
+                 
                   { name: 'Felhasználók', url: 'userlist', icon: ' bi-person-lines-fill' },
                 ]
               : []),

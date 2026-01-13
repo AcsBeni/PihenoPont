@@ -72,10 +72,7 @@ export class AccommodationsComponent {
 ngOnInit(): void {
   this.getAccommodations();
   this.IsAdmin = this.auth.isAdmin()
-  if(!this.IsAdmin){
-    this.router.navigate(['/main']);
-    return
-  }
+  
 }
 
 

@@ -10,7 +10,7 @@
     >
     <button (click)="search()">Keresés</button>
   </div>
-  <button class="add-btn mb-3" data-bs-toggle="modal" data-bs-target="#addAccommodationModal">
+  <button class="add-btn mb-3" data-bs-toggle="modal" data-bs-target="#addAccommodationModal" *ngIf="IsAdmin">
     Új szállás hozzáadása
   </button>
 
@@ -37,8 +37,8 @@
         </div>
 
         <div class="btn-row">
-          <button class="btn edit-btn"  data-bs-toggle="modal" data-bs-target="#editAccommodationModal"  (click)="editAccommodation(acc.id!)">Szerkesztés</button>
-          <button class="btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="setDeleteId(acc.id!)">Törlés</button>
+          <button class="btn edit-btn"  data-bs-toggle="modal" data-bs-target="#editAccommodationModal" *ngIf="IsAdmin"  (click)="editAccommodation(acc.id!)">Szerkesztés</button>
+          <button class="btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" *ngIf="IsAdmin" (click)="setDeleteId(acc.id!)">Törlés</button>
         </div>
       </div>
 

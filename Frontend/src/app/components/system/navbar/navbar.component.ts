@@ -40,7 +40,6 @@ export class NavbarComponent {
   setupMenu(Isloggedin:boolean) {
     
     this.navItems = [
-      { name: 'Naptár', url: 'calendar', icon: 'bi-calendar' },
       { name: 'Foglalás', url: 'bookinglist', icon: 'bi-journal-text' },
     
       ...(Isloggedin
@@ -53,6 +52,7 @@ export class NavbarComponent {
                   { name: 'Felhasználók', url: 'userlist', icon: ' bi-person-lines-fill' },
                 ]
               : []),
+            { name: 'Naptár', url: 'calendar', icon: 'bi-calendar' },
             { name: 'Profil', url: 'profile', icon: 'bi-person-circle' },
             { name: 'Kilépés', url: 'logout', icon: 'bi-box-arrow-right' },
           ]

@@ -8,6 +8,7 @@ import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import { ApiService } from '../../../services/api.service';
 import { AuthService } from '../../../services/auth.service';
 import { Users } from '../../../interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -35,7 +36,8 @@ export class CalendarComponent implements OnInit {
   errorMessage = '';
 
   constructor(private api: ApiService,
-  private authService: AuthService
+  private authService: AuthService,
+  private router:Router,
   ) {}
 
 loggedUser:Users={
@@ -44,9 +46,21 @@ loggedUser:Users={
   password: '',
   email: ''
 }
-
+//User model
+User:Users ={
+  name:"",
+  email:"",
+  password:"",
+  role:"user"
+}
 
   async ngOnInit() {
+    this.User = this.authService.loggedUser()
+    if(!this.User){
+      this.router.navigate(['/main']);
+      return
+    }
+  
     this.loggedUser=this.authService.loggedUser()
     if (this.authService.isAdmin()) {
     try {
